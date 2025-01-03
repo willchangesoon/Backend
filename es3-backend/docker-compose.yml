@@ -1,0 +1,15 @@
+version: '3.8'
+#docker-compose up -d
+services:
+  es3-mysql:
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      TZ: Asia/Seoul
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: es3db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 1234
+    container_name: es3-mysql
+
