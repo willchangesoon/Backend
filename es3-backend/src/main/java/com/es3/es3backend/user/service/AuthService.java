@@ -8,13 +8,16 @@ import com.es3.es3backend.user.dto.request.SignInRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
 @Slf4j
 @Transactional
-public class AuthService{
+public class AuthService implements UserDetailsService {
     private final UserRepository userRepository;
 
     public UserDto signUp(SignInRequest request) throws Exception {
@@ -37,5 +40,10 @@ public class AuthService{
             throw new RuntimeException("Invalid credentials");
         }
         return userDto;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username).orElseThrow(() -> new RuntimeException("user not found"));
     }
 }

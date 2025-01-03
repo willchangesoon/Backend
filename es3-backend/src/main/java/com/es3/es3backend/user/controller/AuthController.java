@@ -21,7 +21,7 @@ public class AuthController {
     private final AuthService authService;
     private final JwtUtil jwtUtil;
 
-    @PostMapping("/signUp")
+    @PostMapping("/sign-up")
     public TokenResponse login(@RequestBody SignInRequest request) throws Exception {
         UserDto userDto = authService.signUp(request);
         return jwtUtil.generateTokens(userDto.id(), userDto.email());
