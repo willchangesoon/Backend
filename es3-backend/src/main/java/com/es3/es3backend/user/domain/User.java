@@ -1,5 +1,6 @@
 package com.es3.es3backend.user.domain;
 
+import com.es3.es3backend.constants.Role;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
