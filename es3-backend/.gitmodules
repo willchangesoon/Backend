@@ -1,0 +1,4 @@
+[submodule "es3-backend/configs"]
+	path = es3-backend/configs
+	url = https://github.com/willchangesoon/configs.git
+	branch = main
