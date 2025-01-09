@@ -65,7 +65,7 @@ public class UserUpdateService {
     public void updateProfileImage(User user, UpdateRequest.ProfileImage profileImage) {
         user = userRepository.findByEmail(user.getEmail())
                 .orElseThrow(() -> new CustomException(ErrorCode.INVALID_EMAIL));
-        user.updateProfileImage(profileImage.getProfile_image());
+        user.updateProfile_img(profileImage.getProfile_image());
     }
 
 

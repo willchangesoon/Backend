@@ -1,5 +1,7 @@
 package com.es3.es3backend.user.domain;
 
+import com.es3.es3backend.config.exception.CustomException;
+import com.es3.es3backend.config.exception.ErrorCode;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -59,6 +61,33 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return this.email;
+    }
+
+    public void updateEmail(String email) {
+        this.email = email;
+    }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updatePassword(String oldPassword, String newPassword) {
+        if(oldPassword.equals(newPassword)) {
+            throw new CustomException(ErrorCode.SAME_PASSWORD);
+        }
+        this.password = newPassword;
+    }
+
+    public void updateMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public void updateAddress(String address) {
+        this.address = address;
+    }
+
+    public void updateProfile_img(String profile_img) {
+        this.profile_img = profile_img;
     }
 }
 
