@@ -39,7 +39,7 @@ public class UpdateRequest {
     @Getter
     public static class ProfileImage {
         @NotBlank(message = "ProfileImage cannot be empty")
-        private String profile_image;
+        private String profileImage;
     }
 
     @Getter

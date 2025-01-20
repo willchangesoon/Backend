@@ -1,5 +1,7 @@
 package com.es3.es3backend.user.service;
 
+import com.es3.es3backend.config.exception.AuthException;
+import com.es3.es3backend.config.exception.ErrorCode;
 import com.es3.es3backend.security.EncryptionUtil;
 import com.es3.es3backend.user.domain.User;
 import com.es3.es3backend.user.domain.UserRepository;
@@ -26,7 +28,7 @@ public class AuthService implements UserDetailsService {
                         .name(request.name())
                         .address(request.address())
                         .mobile(request.mobile())
-                        .profile_img(request.profile_img())
+                        .profileImage(request.profile_img())
                         .password(EncryptionUtil.encrypt(request.password()))
                 .build());
         return UserDto.fromEntity(user);
@@ -34,16 +36,16 @@ public class AuthService implements UserDetailsService {
 
     public UserDto login(String email, String password) throws Exception {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("user not found"));
+                .orElseThrow(() -> new AuthException(ErrorCode.USER_NOT_FOUND));
         UserDto userDto = UserDto.fromEntity(user);
         if (!userDto.verifyPassword(password)) {
-            throw new RuntimeException("Invalid credentials");
+            throw new AuthException(ErrorCode.INVALID_CREDENTIAL);
         }
         return userDto;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username).orElseThrow(() -> new RuntimeException("user not found"));
+        return userRepository.findByEmail(username).orElseThrow(() -> new AuthException(ErrorCode.USER_NOT_FOUND));
     }
 }

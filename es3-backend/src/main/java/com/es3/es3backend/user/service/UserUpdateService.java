@@ -1,6 +1,6 @@
 package com.es3.es3backend.user.service;
 
-import com.es3.es3backend.config.exception.CustomException;
+import com.es3.es3backend.config.exception.AuthException;
 import com.es3.es3backend.config.exception.ErrorCode;
 import com.es3.es3backend.user.domain.User;
 import com.es3.es3backend.user.domain.UserRepository;
@@ -25,47 +25,47 @@ public class UserUpdateService {
     @Transactional
     public void updateEmail(User user, UpdateRequest.Email email) {
         user = userRepository.findByEmail(user.getEmail())
-                .orElseThrow(() -> new CustomException(ErrorCode.INVALID_EMAIL));
+                .orElseThrow(() -> new AuthException(ErrorCode.INVALID_EMAIL));
         if (userRepository.existsByEmail(email.getEmail())){
-            throw new CustomException(ErrorCode.REGISTERED_EMAIL);
+            throw new AuthException(ErrorCode.REGISTERED_EMAIL);
         }
         if(!Pattern.matches(EMAIL_REGEX, email.getEmail())){
-            throw new CustomException(ErrorCode.INVALID_EMAIL);
+            throw new AuthException(ErrorCode.INVALID_EMAIL);
         }
         user.updateEmail(email.getEmail());
     }
 
     public void updateName(User user, UpdateRequest.Name name) {
         user = userRepository.findByEmail(user.getEmail())
-                .orElseThrow(() -> new CustomException(ErrorCode.INVALID_EMAIL));
+                .orElseThrow(() -> new AuthException(ErrorCode.INVALID_EMAIL));
         user.updateName(name.getName());
     }
 
     public void updatePassword(User user, UpdateRequest.Password password) {
         user = userRepository.findByEmail(user.getEmail())
-                .orElseThrow(() -> new CustomException(ErrorCode.INVALID_EMAIL));
+                .orElseThrow(() -> new AuthException(ErrorCode.INVALID_EMAIL));
         if (!Pattern.matches(PASSWORD_REGEX, password.getNewPassword())) {
-            throw new CustomException(ErrorCode.INVALID_PASSWORD);
+            throw new AuthException(ErrorCode.INVALID_PASSWORD);
         }
         user.updatePassword(password.getOldPassword(), password.getNewPassword());
     }
 
     public void updateAddress(User user, UpdateRequest.Address address) {
         user = userRepository.findByEmail(user.getEmail())
-                .orElseThrow(() -> new CustomException(ErrorCode.INVALID_EMAIL));
+                .orElseThrow(() -> new AuthException(ErrorCode.INVALID_EMAIL));
         user.updateAddress(address.getAddress());
     }
 
     public void updateMobile(User user, UpdateRequest.Mobile mobile) {
         user = userRepository.findByEmail(user.getEmail())
-                .orElseThrow(() -> new CustomException(ErrorCode.INVALID_EMAIL));
+                .orElseThrow(() -> new AuthException(ErrorCode.INVALID_EMAIL));
         user.updateMobile(mobile.getMobile());
     }
 
     public void updateProfileImage(User user, UpdateRequest.ProfileImage profileImage) {
         user = userRepository.findByEmail(user.getEmail())
-                .orElseThrow(() -> new CustomException(ErrorCode.INVALID_EMAIL));
-        user.updateProfile_img(profileImage.getProfile_image());
+                .orElseThrow(() -> new AuthException(ErrorCode.INVALID_EMAIL));
+        user.updateProfileImg(profileImage.getProfileImage());
     }
 
 
