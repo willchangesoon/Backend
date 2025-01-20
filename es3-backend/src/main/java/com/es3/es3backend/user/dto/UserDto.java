@@ -26,7 +26,7 @@ public record UserDto(
                 .email(user.getEmail())
                 .address(user.getAddress())
                 .password(user.getPassword())
-                .profile_img(user.getProfile_img())
+                .profile_img(user.getProfileImage())
                 .mobile(user.getMobile())
                 .build();
     }
