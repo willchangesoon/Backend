@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Seller {
 
 	@Id
@@ -20,12 +22,16 @@ public class Seller {
 	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "name", nullable = false)
-	private String name;
 	@Column(name = "email", nullable = false)
 	private String email;
+	@Column(name = "password", nullable = false)
+	private String password;
+	@Column(name = "name", nullable = false)
+	private String name;
 	@Column(name = "mobile", nullable = false)
 	private String mobile;
+	@Column(name = "post_code", nullable = false)
+	private String postCode;
 	@Column(name = "address", nullable = false)
 	private String address;
 	@Column(name = "brn", nullable = false)
@@ -41,3 +47,5 @@ public class Seller {
 	@Column(name = "seller_status")
 	private boolean sellerStatus = false;
 }
+
+
