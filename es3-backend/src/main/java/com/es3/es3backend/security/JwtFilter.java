@@ -1,6 +1,8 @@
 package com.es3.es3backend.security;
 
 
+import com.es3.es3backend.config.exception.AuthException;
+import com.es3.es3backend.seller.service.SellerService;
 import com.es3.es3backend.user.service.AuthService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,6 +24,7 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
     private final AuthService authService;
+    private final SellerService sellerService;
     final String PREFIX = "Bearer ";
 
     @Override
@@ -33,7 +36,13 @@ public class JwtFilter extends OncePerRequestFilter {
                 String email = jwtUtil.getEmail(token);
                 UserDetails user = authService.loadUserByUsername(email);
                 UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(email, null, user.getAuthorities());
+                        new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } catch (AuthException authException) {
+                String email = jwtUtil.getEmail(token);
+                UserDetails user = sellerService.loadUserByUsername(email);
+                UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception e) {
                 log.debug(e.getMessage());

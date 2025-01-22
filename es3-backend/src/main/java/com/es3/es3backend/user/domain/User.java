@@ -1,5 +1,6 @@
 package com.es3.es3backend.user.domain;
 
+import com.es3.es3backend.constants.Role;
 import com.es3.es3backend.config.exception.AuthException;
 import com.es3.es3backend.config.exception.ErrorCode;
 import jakarta.persistence.*;
