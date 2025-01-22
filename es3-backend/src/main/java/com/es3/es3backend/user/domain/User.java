@@ -1,8 +1,8 @@
 package com.es3.es3backend.user.domain;
 
-import com.es3.es3backend.constants.Role;
 import com.es3.es3backend.config.exception.AuthException;
 import com.es3.es3backend.config.exception.ErrorCode;
+import com.es3.es3backend.constants.Role;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,20 +24,28 @@ import java.util.Collection;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "email", nullable = false)
     private String email;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "mobile", nullable = false)
     private String mobile;
 
+    @Column(name = "address", nullable = false)
     private String address;
 
+    @Column(name = "profile_image")
     private String profileImage;
 
+    @Column(name = "role")
     @Enumerated(value = EnumType.STRING)
     private Role role;
 

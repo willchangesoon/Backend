@@ -1,4 +1,4 @@
-package com.es3.es3backend.security;
+package com.es3.es3backend.auth.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

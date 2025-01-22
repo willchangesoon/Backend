@@ -1,4 +1,4 @@
-package com.es3.es3backend.security;
+package com.es3.es3backend.auth.security;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
