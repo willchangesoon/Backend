@@ -63,7 +63,7 @@ public class Seller implements UserDetails {
 
 	@Column(name = "role")
 	@Enumerated(value = EnumType.STRING)
-	private Role role = Role.USER;
+	private Role role = Role.SELLER;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
