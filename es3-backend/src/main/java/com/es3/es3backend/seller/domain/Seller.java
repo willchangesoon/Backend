@@ -48,6 +48,8 @@ public class Seller implements UserDetails {
 	private String postCode;
 	@Column(name = "address", nullable = false)
 	private String address;
+
+	//business registration number
 	@Column(name = "brn", nullable = false)
 	private String brn;
 
@@ -57,7 +59,8 @@ public class Seller implements UserDetails {
 	private String accountNumber;
 	@Column(name = "account_holder") // nullable = false
 	private String accountHolder;
-
+	@Column(name = "id_number")
+	private String idNumber;
 	@Column(name = "seller_status")
 	private boolean sellerStatus = false;
 

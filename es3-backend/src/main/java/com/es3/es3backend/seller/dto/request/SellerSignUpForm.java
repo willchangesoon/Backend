@@ -10,7 +10,8 @@ public record SellerSignUpForm(
 	String address,
 	String bank,
 	String accountNumber,
-	String accountHolder
+	String accountHolder,
+	String idNumber
 ) {
 
 }

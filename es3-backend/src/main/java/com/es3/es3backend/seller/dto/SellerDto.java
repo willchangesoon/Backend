@@ -15,6 +15,7 @@ public record SellerDto (
 	String bank,
 	String accountNumber,
 	String accountHolder,
+	String idNumber,
 	boolean sellerStatus
 ) {
 	public static SellerDto fromEntity(Seller seller) {
@@ -29,6 +30,7 @@ public record SellerDto (
 			.bank(seller.getBank())
 			.accountNumber(seller.getAccountNumber())
 			.accountHolder(seller.getAccountHolder())
+			.idNumber(seller.getIdNumber())
 			.sellerStatus(seller.isSellerStatus())
 			.build();
 	}

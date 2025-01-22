@@ -39,6 +39,7 @@ public class SellerService implements UserDetailsService {
 				.bank(form.bank())
 				.accountNumber(form.accountNumber())
 				.accountHolder(form.accountHolder())
+				.idNumber(form.idNumber())
 				.build()));
 	}
 
