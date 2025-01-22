@@ -1,6 +1,8 @@
 package com.es3.es3backend.user.domain;
 
 import com.es3.es3backend.constants.Role;
+import com.es3.es3backend.config.exception.AuthException;
+import com.es3.es3backend.config.exception.ErrorCode;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -34,19 +36,19 @@ public class User implements UserDetails {
 
     private String address;
 
-    private String profile_img;
+    private String profileImage;
 
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
     @Builder
-    public User(String email, String name, String password, String mobile, String address, String profile_img) {
+    public User(String email, String name, String password, String mobile, String address, String profileImage) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.mobile = mobile;
         this.address = address;
-        this.profile_img = profile_img;
+        this.profileImage = profileImage;
         this.role = Role.USER;
     }
 
@@ -60,6 +62,33 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return this.email;
+    }
+
+    public void updateEmail(String email) {
+        this.email = email;
+    }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    public void updatePassword(String oldPassword, String newPassword) {
+        if(oldPassword.equals(newPassword)) {
+            throw new AuthException(ErrorCode.SAME_PASSWORD);
+        }
+        this.password = newPassword;
+    }
+
+    public void updateMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public void updateAddress(String address) {
+        this.address = address;
+    }
+
+    public void updateProfileImg(String profileImg) {
+        this.profileImage = profileImg;
     }
 }
 

@@ -2,9 +2,7 @@ package com.es3.es3backend.seller.dto.response;
 
 import com.es3.es3backend.seller.dto.SellerDto;
 import lombok.Builder;
-import lombok.Getter;
 
-@Getter
 @Builder
 public record SignUpSellerResponse(
 	String name,

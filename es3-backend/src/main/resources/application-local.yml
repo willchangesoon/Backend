@@ -5,8 +5,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: 'jdbc:mysql://localhost:3306/es3db?serverTimezone=Asia/Seoul'
-    username: user
-    password: 1234
+    username: root
+    password: zerobase
   jpa:
     open-in-view: false
     show-sql: true
