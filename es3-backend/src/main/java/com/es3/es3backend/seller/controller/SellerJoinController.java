@@ -3,7 +3,7 @@ package com.es3.es3backend.seller.controller;
 import com.es3.es3backend.seller.dto.request.SellerSignInForm;
 import com.es3.es3backend.seller.dto.request.SellerSignUpForm;
 import com.es3.es3backend.seller.dto.response.SignUpSellerResponse;
-import com.es3.es3backend.seller.service.SellerService;
+import com.es3.es3backend.seller.service.SellerJoinService;
 import com.es3.es3backend.user.dto.response.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,17 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/oauth/sellers")
 public class SellerJoinController {
 
-	private final SellerService sellerService;
+	private final SellerJoinService sellerJoinService;
 
 	@PostMapping
 	public ResponseEntity<SignUpSellerResponse> signUp(@RequestBody SellerSignUpForm form) throws Exception {
 		return ResponseEntity.status(201).body(
-			SignUpSellerResponse.from(sellerService.signUp(form))
+			SignUpSellerResponse.from(sellerJoinService.signUp(form))
 		);
 	}
 
 	@PutMapping
 	public ResponseEntity<TokenResponse> signIn(@RequestBody SellerSignInForm form) throws Exception {
-		return ResponseEntity.status(200).body(sellerService.signIn(form));
+		return ResponseEntity.status(200).body(sellerJoinService.signIn(form));
 	}
 }

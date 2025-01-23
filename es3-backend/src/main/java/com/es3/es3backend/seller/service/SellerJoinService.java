@@ -2,6 +2,7 @@ package com.es3.es3backend.seller.service;
 
 import com.es3.es3backend.config.exception.AuthException;
 import com.es3.es3backend.config.exception.ErrorCode;
+import com.es3.es3backend.constants.Role;
 import com.es3.es3backend.security.EncryptionUtil;
 import com.es3.es3backend.security.JwtUtil;
 import com.es3.es3backend.seller.domain.Seller;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class SellerService implements UserDetailsService {
+public class SellerJoinService implements UserDetailsService {
 
 	private final SellerRepository sellerRepository;
 	private final JwtUtil jwtUtil;
@@ -40,6 +41,7 @@ public class SellerService implements UserDetailsService {
 				.accountNumber(form.accountNumber())
 				.accountHolder(form.accountHolder())
 				.idNumber(form.idNumber())
+				.role(Role.SELLER)
 				.build()));
 	}
 

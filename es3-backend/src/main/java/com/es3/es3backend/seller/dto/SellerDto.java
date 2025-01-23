@@ -1,6 +1,8 @@
 package com.es3.es3backend.seller.dto;
 
+import com.es3.es3backend.constants.Role;
 import com.es3.es3backend.seller.domain.Seller;
+import java.time.LocalDateTime;
 import lombok.Builder;
 
 @Builder
@@ -16,7 +18,9 @@ public record SellerDto (
 	String accountNumber,
 	String accountHolder,
 	String idNumber,
-	boolean sellerStatus
+	Role role,
+	boolean sellerStatus,
+	LocalDateTime updateDt
 ) {
 	public static SellerDto fromEntity(Seller seller) {
 		return SellerDto.builder()
@@ -32,6 +36,8 @@ public record SellerDto (
 			.accountHolder(seller.getAccountHolder())
 			.idNumber(seller.getIdNumber())
 			.sellerStatus(seller.isSellerStatus())
+			.updateDt(seller.getUpdateDate())
+			.role(seller.getRole())
 			.build();
 	}
 }
