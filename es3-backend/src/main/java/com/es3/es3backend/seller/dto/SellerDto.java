@@ -20,6 +20,7 @@ public record SellerDto (
 	String idNumber,
 	Role role,
 	boolean sellerStatus,
+	LocalDateTime createDt,
 	LocalDateTime updateDt
 ) {
 	public static SellerDto fromEntity(Seller seller) {
@@ -36,6 +37,7 @@ public record SellerDto (
 			.accountHolder(seller.getAccountHolder())
 			.idNumber(seller.getIdNumber())
 			.sellerStatus(seller.isSellerStatus())
+			.createDt(seller.getCreatedDate())
 			.updateDt(seller.getUpdateDate())
 			.role(seller.getRole())
 			.build();

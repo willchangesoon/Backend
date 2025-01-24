@@ -18,7 +18,7 @@ public class SellerUpdateController {
 
 	private final SellerUpdateService sellerUpdateService;
 	@PatchMapping("/email")
-	public ResponseEntity<?> emailUpdate(@RequestBody SellerUpdateRequest.Email request,
+	public ResponseEntity<SellerUpdateResponse> emailUpdate(@RequestBody SellerUpdateRequest.Email request,
 		Principal principal) {
 		return ResponseEntity.ok().body(
 			SellerUpdateResponse.from(sellerUpdateService.updateEmail(request, principal.getName()))
@@ -26,7 +26,7 @@ public class SellerUpdateController {
 	}
 
 	@PatchMapping("/name")
-	public ResponseEntity<?> nameUpdate(@RequestBody SellerUpdateRequest.Name request,
+	public ResponseEntity<SellerUpdateResponse> nameUpdate(@RequestBody SellerUpdateRequest.Name request,
 		Principal principal) {
 		return ResponseEntity.ok().body(
 			SellerUpdateResponse.from(sellerUpdateService.updateName(request, principal.getName()))
@@ -34,7 +34,7 @@ public class SellerUpdateController {
 	}
 
 	@PatchMapping("/mobile")
-	public ResponseEntity<?> mobileUpdate(@RequestBody SellerUpdateRequest.Mobile request,
+	public ResponseEntity<SellerUpdateResponse> mobileUpdate(@RequestBody SellerUpdateRequest.Mobile request,
 		Principal principal) {
 		return ResponseEntity.ok().body(
 			SellerUpdateResponse.from(sellerUpdateService.updateMobile(request, principal.getName()))
@@ -42,7 +42,7 @@ public class SellerUpdateController {
 	}
 
 	@PatchMapping("/address")
-	public ResponseEntity<?> addressUpdate(@RequestBody SellerUpdateRequest.Address request,
+	public ResponseEntity<SellerUpdateResponse> addressUpdate(@RequestBody SellerUpdateRequest.Address request,
 		Principal principal) {
 		return ResponseEntity.ok().body(
 			SellerUpdateResponse.from(sellerUpdateService.updateAddress(request, principal.getName()))
