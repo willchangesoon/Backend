@@ -1,4 +1,4 @@
-package com.es3.es3backend.seller.dto.request;
+package com.es3.es3backend.auth.dto.seller.request;
 
 public record SellerSignInForm(
 	String email,

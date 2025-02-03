@@ -15,10 +15,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/user")
-@Tag(name = "유저", description = "유 API 입니다")
+@RequestMapping("/users")
+@Tag(name = "유저", description = "유저 API 입니다")
 public class UserController {
-
     private final UserUpdateService userUpdateService;
 
     @GetMapping("")
