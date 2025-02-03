@@ -1,4 +1,4 @@
-package com.es3.es3backend.seller.dto.response;
+package com.es3.es3backend.auth.dto.seller.response;
 
 import com.es3.es3backend.seller.dto.SellerDto;
 import java.time.LocalDateTime;
