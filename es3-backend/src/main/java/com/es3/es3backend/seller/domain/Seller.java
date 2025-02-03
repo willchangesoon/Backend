@@ -1,5 +1,6 @@
 package com.es3.es3backend.seller.domain;
 
+import com.es3.es3backend.common.entity.BaseEntity;
 import com.es3.es3backend.auth.security.EncryptionUtil;
 import com.es3.es3backend.config.exception.AuthException;
 import com.es3.es3backend.config.exception.ErrorCode;
@@ -24,7 +25,7 @@ import java.util.Collection;
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @Table(name = "tb_sellers")
-public class Seller implements UserDetails {
+public class Seller extends BaseEntity implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,7 +62,7 @@ public class Seller implements UserDetails {
 
 	@Column(name = "role")
 	@Enumerated(value = EnumType.STRING)
-	private Role role = Role.SELLER;
+	private Role role;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
