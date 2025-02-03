@@ -1,7 +1,8 @@
 package com.es3.es3backend.seller.controller;
 
-import com.es3.es3backend.seller.dto.request.SellerUpdateRequest;
-import com.es3.es3backend.seller.dto.response.SellerUpdateResponse;
+
+import com.es3.es3backend.auth.dto.seller.request.SellerUpdateRequest;
+import com.es3.es3backend.auth.dto.seller.response.SellerUpdateResponse;
 import com.es3.es3backend.seller.service.SellerUpdateService;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;

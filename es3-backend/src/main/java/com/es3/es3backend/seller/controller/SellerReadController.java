@@ -1,6 +1,6 @@
 package com.es3.es3backend.seller.controller;
 
-import com.es3.es3backend.seller.dto.response.SellerDetail;
+import com.es3.es3backend.auth.dto.seller.response.SellerDetail;
 import com.es3.es3backend.seller.service.SellerReadService;
 import java.security.Principal;
 import lombok.RequiredArgsConstructor;
