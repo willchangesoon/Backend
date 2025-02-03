@@ -5,6 +5,7 @@ import com.es3.es3backend.auth.dto.seller.request.SellerSignUpForm;
 import com.es3.es3backend.auth.security.EncryptionUtil;
 import com.es3.es3backend.config.exception.AuthException;
 import com.es3.es3backend.config.exception.ErrorCode;
+import com.es3.es3backend.constants.Role;
 import com.es3.es3backend.seller.domain.Seller;
 import com.es3.es3backend.seller.domain.SellerRepository;
 import com.es3.es3backend.seller.dto.SellerDto;
@@ -31,6 +32,7 @@ public class SellerAuthService {
                         .accountNumber(form.accountNumber())
                         .accountHolder(form.accountHolder())
                         .idNumber(form.idNumber())
+                        .role(Role.SELLER)
                         .build()));
     }
 

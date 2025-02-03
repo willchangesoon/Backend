@@ -40,7 +40,7 @@ public class SecurityConfig {
                 authorize.requestMatchers("/api-docs/**", "/v3/api-docs/**", "/swagger-ui/**",
                                 "/swagger-ui.html").permitAll()
                         .requestMatchers("/user/**").hasRole("USER")
-                        .requestMatchers( "/oauth/**").permitAll()
+                        .requestMatchers( "/oauth/**", "/stores-common/**").permitAll()
                         .anyRequest().authenticated());
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
