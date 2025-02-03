@@ -1,4 +1,4 @@
-package com.es3.es3backend.user.dto.response;
+package com.es3.es3backend.auth.dto.common.response;
 
 public record TokenResponse(
         String accessToken,

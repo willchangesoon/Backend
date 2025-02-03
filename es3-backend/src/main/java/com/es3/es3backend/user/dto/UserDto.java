@@ -1,7 +1,7 @@
 package com.es3.es3backend.user.dto;
 
 
-import com.es3.es3backend.security.EncryptionUtil;
+import com.es3.es3backend.auth.security.EncryptionUtil;
 import com.es3.es3backend.user.domain.User;
 import lombok.Builder;
 
@@ -12,7 +12,7 @@ public record UserDto(
         String password,
         String mobile,
         String address,
-        String profile_img
+        String profileImg
 ){
 
     @Builder
@@ -26,7 +26,7 @@ public record UserDto(
                 .email(user.getEmail())
                 .address(user.getAddress())
                 .password(user.getPassword())
-                .profile_img(user.getProfileImage())
+                .profileImg(user.getProfileImage())
                 .mobile(user.getMobile())
                 .build();
     }

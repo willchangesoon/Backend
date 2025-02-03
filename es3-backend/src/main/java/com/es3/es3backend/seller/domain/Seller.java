@@ -1,20 +1,11 @@
 package com.es3.es3backend.seller.domain;
 
 import com.es3.es3backend.common.entity.BaseEntity;
+import com.es3.es3backend.auth.security.EncryptionUtil;
 import com.es3.es3backend.config.exception.AuthException;
 import com.es3.es3backend.config.exception.ErrorCode;
 import com.es3.es3backend.constants.Role;
-import com.es3.es3backend.security.EncryptionUtil;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import java.util.ArrayList;
-import java.util.Collection;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,11 +15,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 @Builder
+@Table(name = "tb_sellers")
 public class Seller extends BaseEntity implements UserDetails {
 
 	@Id
