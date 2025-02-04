@@ -1,10 +1,11 @@
 package com.es3.es3backend.seller.domain;
 
-import com.es3.es3backend.common.entity.BaseEntity;
 import com.es3.es3backend.auth.security.EncryptionUtil;
+import com.es3.es3backend.common.entity.BaseEntity;
 import com.es3.es3backend.config.exception.AuthException;
 import com.es3.es3backend.config.exception.ErrorCode;
 import com.es3.es3backend.constants.Role;
+import com.es3.es3backend.store.domain.Store;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +32,10 @@ public class Seller extends BaseEntity implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "store_id")
+	private Store store;
 
 	@Column(name = "email", nullable = false)
 	private String email;
@@ -80,6 +85,10 @@ public class Seller extends BaseEntity implements UserDetails {
 		if (!password.equals(EncryptionUtil.decrypt(this.password))) {
 			throw new AuthException(ErrorCode.INVALID_CREDENTIAL);
 		}
+	}
+
+	public void connectStore(Store store) {
+		this.store = store;
 	}
 }
 
