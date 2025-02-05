@@ -17,7 +17,10 @@ public enum ErrorCode {
     REGISTERED_NAME(HttpStatus.NOT_ACCEPTABLE, 2001, "이미 사용중인 이름입니다."),
     STORE_NOT_FOUND(HttpStatus.NOT_FOUND, 2002, "상점이 존재하지 않습니다."),
     NOT_AUTHORIZED(HttpStatus.UNAUTHORIZED, 2003, "셀러(판매자) 계정으로만 상점을 개설 할 수 있습니다."),
-    NOT_AUTHORIZED_READ(HttpStatus.UNAUTHORIZED, 2004, "조회가 불가능한 상점입니다.")
+    NOT_AUTHORIZED_READ(HttpStatus.UNAUTHORIZED, 2004, "조회가 불가능한 상점입니다."),
+    //banner exception
+    DATE_VALIDATION(HttpStatus.NOT_ACCEPTABLE, 3001, "시작날짜는 끝나는 날짜보다 늦을 수 잆습니다."),
+    BANNER_NOT_FOUND(HttpStatus.NOT_FOUND, 3002, "존재하지 않는 배너입니다.");
     ;
 
 
