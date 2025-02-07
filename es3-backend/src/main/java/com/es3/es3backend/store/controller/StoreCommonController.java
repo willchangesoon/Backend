@@ -18,9 +18,9 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/stores-common")
+@RequestMapping("/common/store")
 @Tag(name = "상점 공통", description = "토큰/인가 없이 조회 가능한 상점 API 입니다.")
-public class StoreReadController {
+public class StoreCommonController {
 
     private final StoreService storeService;
 

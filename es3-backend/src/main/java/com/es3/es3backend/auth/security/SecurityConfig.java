@@ -39,8 +39,9 @@ public class SecurityConfig {
                 // Swagger
                 authorize.requestMatchers("/api-docs/**", "/v3/api-docs/**", "/swagger-ui/**",
                                 "/swagger-ui.html").permitAll()
-                        .requestMatchers("/user/**").hasRole("USER")
-                        .requestMatchers( "/oauth/**", "/stores-common/**").permitAll()
+                        .requestMatchers("/users/**").hasRole("USER")
+                        .requestMatchers("/sellers/**").hasAnyRole("SELLER", "ADMIN")
+                        .requestMatchers( "/oauth/**", "/stores-common/**", "/common/**").permitAll()
                         .anyRequest().authenticated());
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
