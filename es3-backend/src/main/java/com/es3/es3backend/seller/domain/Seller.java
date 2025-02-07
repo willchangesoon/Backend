@@ -90,6 +90,26 @@ public class Seller extends BaseEntity implements UserDetails {
 	public void connectStore(Store store) {
 		this.store = store;
 	}
+
+	public Seller updateEmail(String email){
+		this.email = email;
+		return this;
+	}
+
+	public Seller updateAddress(String address) {
+		this.address = address;
+		return this;
+	}
+
+	public Seller updateMobile(String mobile) {
+		this.mobile = mobile;
+		return this;
+	}
+
+	public Seller updateName(String name) {
+		this.name = name;
+		return this;
+	}
 }
 
 

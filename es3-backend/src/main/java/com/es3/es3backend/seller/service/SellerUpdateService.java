@@ -12,11 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class SellerUpdateService {
 
 	private final SellerRepository sellerRepository;
 
-	@Transactional
+
 	public SellerDto updateEmail(SellerUpdateRequest.Email request, String userEmail) {
 		Seller seller = sellerRepository.findByEmail(userEmail).orElseThrow(
 			() -> new AuthException(ErrorCode.USER_NOT_FOUND)
@@ -24,11 +25,7 @@ public class SellerUpdateService {
 		if (sellerRepository.findByEmail(request.email()).isPresent()) {
 			throw new AuthException(ErrorCode.REGISTERED_EMAIL);
 		}
-		return SellerDto.fromEntity(sellerRepository.save(
-			Seller.builder()
-				.id(seller.getId())
-				.email(request.email())
-				.build()));
+		return SellerDto.fromEntity(seller.updateEmail(request.email()));
 	}
 
 	@Transactional
@@ -36,11 +33,7 @@ public class SellerUpdateService {
 		Seller seller = sellerRepository.findByEmail(userEmail).orElseThrow(
 			() -> new AuthException(ErrorCode.USER_NOT_FOUND)
 		);
-		return SellerDto.fromEntity(sellerRepository.save(
-			Seller.builder()
-				.id(seller.getId())
-				.name(request.name())
-				.build()));
+		return SellerDto.fromEntity(seller.updateName(request.name()));
 	}
 
 	@Transactional
@@ -51,11 +44,7 @@ public class SellerUpdateService {
 		if (sellerRepository.findByMobile(request.mobile()).isPresent()) {
 			throw new AuthException(ErrorCode.REGISTERED_EMAIL);
 		}
-		return SellerDto.fromEntity(sellerRepository.save(
-			Seller.builder()
-				.id(seller.getId())
-				.mobile(request.mobile())
-				.build()));
+		return SellerDto.fromEntity(seller.updateMobile(request.mobile()));
 	}
 
 	@Transactional
@@ -63,11 +52,7 @@ public class SellerUpdateService {
 		Seller seller = sellerRepository.findByEmail(userEmail).orElseThrow(
 			() -> new AuthException(ErrorCode.USER_NOT_FOUND)
 		);
-		return SellerDto.fromEntity(sellerRepository.save(
-			Seller.builder()
-				.id(seller.getId())
-				.address(request.address())
-				.build()));
+		return SellerDto.fromEntity(seller.updateAddress(request.address()));
 	}
 
 }
