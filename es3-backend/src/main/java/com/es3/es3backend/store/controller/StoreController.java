@@ -23,7 +23,7 @@ public class StoreController {
     private final StoreService storeService;
 
     @GetMapping("")
-    @Operation(summary = "상점 불러오기", description = "유저(셀러)의 상점으 불러옵니다.")
+    @Operation(summary = "상점 불러오기", description = "유저(셀러)의 상점을 불러옵니다.")
     public ResponseEntity<StoreDto> getStore(@AuthenticationPrincipal Seller seller) {
         return ResponseEntity.status(HttpStatus.OK).body(storeService.getSellerStore(seller));
     }

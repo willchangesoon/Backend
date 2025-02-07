@@ -1,6 +1,7 @@
 package com.es3.es3backend.store.controller;
 
 import com.es3.es3backend.store.dto.StoreDto;
+import com.es3.es3backend.store.dto.StoreListDto;
 import com.es3.es3backend.store.service.StoreCommonService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -11,8 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,7 +31,7 @@ public class StoreCommonController {
     @GetMapping("/activate-list")
     @PermitAll
     @Operation(summary = "상점 리스트" , description = "상태가 활성화된 상점들의 리스트를 주는 API 입니다.")
-    public ResponseEntity<List<StoreDto>> getAllActivatedStores() {
+    public ResponseEntity<StoreListDto> getAllActivatedStores() {
         return ResponseEntity.status(200).body(storeCommonService.getAvailableStores(null, 5));
     }
 

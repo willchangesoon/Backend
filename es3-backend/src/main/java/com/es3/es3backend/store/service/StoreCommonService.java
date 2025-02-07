@@ -6,6 +6,7 @@ import com.es3.es3backend.constants.StoreStatus;
 import com.es3.es3backend.store.domain.Store;
 import com.es3.es3backend.store.domain.StoreRepository;
 import com.es3.es3backend.store.dto.StoreDto;
+import com.es3.es3backend.store.dto.StoreListDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -33,10 +33,10 @@ public class StoreCommonService {
         return StoreDto.fromEntityFilterBanner(store);
     }
 
-    public List<StoreDto> getAvailableStores(Long cursor, int size) {
+    public StoreListDto getAvailableStores(Long cursor, int size) {
         Pageable pageable = PageRequest.of(0, size, Sort.by("id").descending());
         List<Store> stores = storeRepository.findAllByStatusAndByCursor(cursor, StoreStatus.ACTIVATE, pageable);
-        return stores.stream().map(StoreDto::fromEntityFilterBanner).collect(Collectors.toList());
+        return StoreListDto.fromEntity(stores);
     }
 
 }

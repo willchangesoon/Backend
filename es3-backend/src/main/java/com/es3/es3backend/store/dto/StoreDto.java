@@ -7,6 +7,7 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Builder
 public record StoreDto(
         String name,
         String logoImg,
@@ -15,10 +16,6 @@ public record StoreDto(
         String contactNumber,
         List<BannerDto> bannerList
 ) {
-
-    @Builder
-    public StoreDto {
-    }
 
     public static StoreDto fromEntityFilterBanner(Store store) {
         return StoreDto.builder()
