@@ -3,12 +3,14 @@ package com.es3.es3backend.store.controller;
 import com.es3.es3backend.config.exception.ErrorCode;
 import com.es3.es3backend.config.exception.StoreException;
 import com.es3.es3backend.seller.domain.Seller;
+import com.es3.es3backend.store.dto.StoreDto;
 import com.es3.es3backend.store.dto.request.StoreCreateForm;
 import com.es3.es3backend.store.dto.request.StoreUpdateRequest;
 import com.es3.es3backend.store.service.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,12 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "상점", description = "상점 API 입니다")
 public class StoreController {
     private final StoreService storeService;
+
+    @GetMapping("")
+    @Operation(summary = "상점 불러오기", description = "유저(셀러)의 상점을 불러옵니다.")
+    public ResponseEntity<StoreDto> getStore(@AuthenticationPrincipal Seller seller) {
+        return ResponseEntity.status(HttpStatus.OK).body(storeService.getSellerStore(seller));
+    }
 
     @PostMapping("")
     @Operation(summary = "상점 생성" , description = "상점 생성 API 입니다.")

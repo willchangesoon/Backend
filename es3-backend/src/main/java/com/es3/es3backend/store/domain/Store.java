@@ -1,5 +1,6 @@
 package com.es3.es3backend.store.domain;
 
+import com.es3.es3backend.banner.domain.Banner;
 import com.es3.es3backend.common.entity.BaseEntity;
 import com.es3.es3backend.constants.StoreStatus;
 import com.es3.es3backend.seller.domain.Seller;
@@ -9,6 +10,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,6 +29,9 @@ public class Store extends BaseEntity {
 
     @OneToOne(mappedBy = "store")
     private Seller seller;
+
+    @OneToMany(mappedBy = "store")
+    private List<Banner> banners = new ArrayList<>();
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -65,5 +72,9 @@ public class Store extends BaseEntity {
 
     public void updateAddress(String address) {
         this.address = address;
+    }
+
+    public void addBanners(Banner banner) {
+        this.banners.add(banner);
     }
 }

@@ -3,7 +3,6 @@ package com.es3.es3backend.store.service;
 import com.es3.es3backend.config.exception.AuthException;
 import com.es3.es3backend.config.exception.ErrorCode;
 import com.es3.es3backend.config.exception.StoreException;
-import com.es3.es3backend.constants.StoreStatus;
 import com.es3.es3backend.seller.domain.Seller;
 import com.es3.es3backend.seller.domain.SellerRepository;
 import com.es3.es3backend.store.domain.Store;
@@ -14,13 +13,7 @@ import com.es3.es3backend.store.dto.request.StoreUpdateRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -43,25 +36,6 @@ public class StoreService {
                 .contactNumber(form.contactNumber())
                 .build());
         sellerIp.connectStore(store);
-    }
-
-    public StoreDto getStoreById(Seller seller, Long id) {
-        Store store = storeRepository.findById(id).orElseThrow(() -> new StoreException(ErrorCode.STORE_NOT_FOUND));
-        if (seller != null && seller.getStore().equals(store)) {
-            return StoreDto.fromEntity(store);
-        }
-
-        if (store.getStatus() != StoreStatus.ACTIVATE) {
-            throw new StoreException(ErrorCode.NOT_AUTHORIZED_READ);
-        }
-
-        return StoreDto.fromEntity(store);
-    }
-
-    public List<StoreDto> getAvailableStores(Long cursor, int size) {
-        Pageable pageable = PageRequest.of(0, size, Sort.by("id").descending());
-        List<Store> stores = storeRepository.findAllByStatusAndByCursor(cursor, StoreStatus.ACTIVATE, pageable);
-        return stores.stream().map(StoreDto::fromEntity).collect(Collectors.toList());
     }
 
     public void updateContactNumber(Seller seller, long id, StoreUpdateRequest.ContactNumber contactNumber) {
@@ -99,6 +73,11 @@ public class StoreService {
             throw new StoreException(ErrorCode.NOT_AUTHORIZED);
         }
         store.updateLogoImg(logoImg.getLogoImg());
+    }
+
+    public StoreDto getSellerStore(Seller seller) {
+        seller = getSeller(seller);
+        return StoreDto.fromEntity(seller.getStore());
     }
 
     private Seller getSeller(Seller seller) {

@@ -1,18 +1,39 @@
 package com.es3.es3backend.store.dto;
 
+import com.es3.es3backend.banner.dto.BannerDto;
 import com.es3.es3backend.store.domain.Store;
 import lombok.Builder;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Builder
 public record StoreDto(
         String name,
         String logoImg,
         String description,
         String address,
-        String contactNumber
+        String contactNumber,
+        List<BannerDto> bannerList
 ) {
 
-    @Builder
-    public StoreDto {
+    public static StoreDto fromEntityFilterBanner(Store store) {
+        return StoreDto.builder()
+                .name(store.getName())
+                .address(store.getAddress())
+                .description(store.getDescription())
+                .logoImg(store.getLogoImg())
+                .contactNumber(store.getContactNumber())
+                .bannerList(
+                        store.getBanners().stream().filter(
+                                banner -> {
+                                    LocalDateTime now = LocalDateTime.now();
+                                    return (banner.getStartDt().isBefore(now) || banner.getStartDt().isEqual(now)) &&
+                                            (banner.getEndDt().isAfter(now) || banner.getEndDt().isEqual(now));
+                                }
+                        ).map(BannerDto::fromEntity).toList()
+                )
+                .build();
     }
 
     public static StoreDto fromEntity(Store store) {
@@ -22,6 +43,7 @@ public record StoreDto(
                 .description(store.getDescription())
                 .logoImg(store.getLogoImg())
                 .contactNumber(store.getContactNumber())
+                .bannerList(store.getBanners().stream().map(BannerDto::fromEntity).toList())
                 .build();
     }
 }
