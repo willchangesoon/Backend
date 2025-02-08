@@ -1,6 +1,7 @@
 package com.es3.es3backend.order.domain;
 
 import com.es3.es3backend.common.entity.BaseEntity;
+import com.es3.es3backend.payment.domain.Payment;
 import com.es3.es3backend.store.domain.Store;
 import com.es3.es3backend.user.domain.User;
 import jakarta.persistence.*;
@@ -35,6 +36,10 @@ public class Order extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "store_id")
     private Store store;
+
+    @OneToOne
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
 
 
 
