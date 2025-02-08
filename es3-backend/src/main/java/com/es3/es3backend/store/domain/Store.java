@@ -3,6 +3,7 @@ package com.es3.es3backend.store.domain;
 import com.es3.es3backend.banner.domain.Banner;
 import com.es3.es3backend.common.entity.BaseEntity;
 import com.es3.es3backend.constants.StoreStatus;
+import com.es3.es3backend.order.domain.Order;
 import com.es3.es3backend.seller.domain.Seller;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,9 @@ public class Store extends BaseEntity {
 
     @OneToMany(mappedBy = "store")
     private List<Banner> banners = new ArrayList<>();
+
+    @OneToMany(mappedBy = "store")
+    private List<Order> orders = new ArrayList<>();
 
     @Column(name = "name", nullable = false)
     private String name;

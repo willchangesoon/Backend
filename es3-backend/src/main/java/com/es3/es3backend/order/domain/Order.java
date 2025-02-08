@@ -1,0 +1,41 @@
+package com.es3.es3backend.order.domain;
+
+import com.es3.es3backend.common.entity.BaseEntity;
+import com.es3.es3backend.store.domain.Store;
+import com.es3.es3backend.user.domain.User;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+@Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "tb_orders")
+public class Order extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "total_price")
+    private Long totalPrice;
+
+    @Column(name = "order_status")
+    @Enumerated(value = EnumType.STRING)
+    private OrderStatus orderStatus;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Store store;
+
+
+
+}

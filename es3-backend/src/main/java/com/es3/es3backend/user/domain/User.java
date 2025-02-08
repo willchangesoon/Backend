@@ -3,6 +3,7 @@ package com.es3.es3backend.user.domain;
 import com.es3.es3backend.config.exception.AuthException;
 import com.es3.es3backend.config.exception.ErrorCode;
 import com.es3.es3backend.constants.Role;
+import com.es3.es3backend.order.domain.Order;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -13,7 +14,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,6 +29,9 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders = new ArrayList<>();
 
     @Column(name = "email", nullable = false)
     private String email;
