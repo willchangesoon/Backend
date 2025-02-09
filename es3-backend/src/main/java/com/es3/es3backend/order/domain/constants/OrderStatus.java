@@ -1,4 +1,4 @@
-package com.es3.es3backend.order.domain;
+package com.es3.es3backend.order.domain.constants;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,5 +11,6 @@ public enum OrderStatus {
     SHIPPED,             // 발송됨
     OUT_FOR_DELIVERY,    // 배달 중
     DELIVERED,           // 배달 완료
-    ORDER_COMPLETED      // 주문 완료
+    ORDER_COMPLETED,     // 주문 완료
+    CANCELLED             //주문 취소
 }

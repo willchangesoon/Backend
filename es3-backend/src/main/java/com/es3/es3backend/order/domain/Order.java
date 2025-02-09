@@ -1,6 +1,7 @@
 package com.es3.es3backend.order.domain;
 
 import com.es3.es3backend.common.entity.BaseEntity;
+import com.es3.es3backend.order.domain.constants.OrderStatus;
 import com.es3.es3backend.payment.domain.Payment;
 import com.es3.es3backend.store.domain.Store;
 import com.es3.es3backend.user.domain.User;
@@ -9,6 +10,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,6 +25,9 @@ public class Order extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderDetail> orderDetails = new ArrayList<>();
 
     @Column(name = "total_price")
     private Long totalPrice;
@@ -37,8 +44,7 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "store_id")
     private Store store;
 
-    @OneToOne
-    @JoinColumn(name = "payment_id")
+    @OneToOne(mappedBy = "order")
     private Payment payment;
 
 

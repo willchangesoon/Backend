@@ -2,6 +2,8 @@ package com.es3.es3backend.payment.domain;
 
 import com.es3.es3backend.common.entity.BaseEntity;
 import com.es3.es3backend.order.domain.Order;
+import com.es3.es3backend.payment.domain.constants.PaymentMethod;
+import com.es3.es3backend.payment.domain.constants.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,6 +31,7 @@ public class Payment extends BaseEntity {
     @Column(name = "status")
     private PaymentStatus status;
 
-    @OneToOne(mappedBy = "payment")
+    @OneToOne
+    @JoinColumn(name = "order_id")
     private Order order;
 }

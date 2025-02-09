@@ -1,4 +1,4 @@
-package com.es3.es3backend.payment.domain;
+package com.es3.es3backend.payment.domain.constants;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
