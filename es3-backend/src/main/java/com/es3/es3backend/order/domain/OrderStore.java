@@ -1,14 +1,16 @@
 package com.es3.es3backend.order.domain;
 
 import com.es3.es3backend.common.entity.BaseEntity;
-import com.es3.es3backend.order.domain.constants.OrderStatus;
+import com.es3.es3backend.order.domain.constants.OrderStoreStatus;
 import com.es3.es3backend.store.domain.Store;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +38,22 @@ public class OrderStore extends BaseEntity {
     private Order order;
 
     @Column(name = "status")
-    private OrderStatus status;
+    @Enumerated(EnumType.STRING)
+    private OrderStoreStatus orderStoreStatus;
 
     @Column(name = "total_price")
-    private Long totalPrice;
+    private BigDecimal totalPrice;
 
+    @Builder
+    public OrderStore(Store store, Order order, OrderStoreStatus orderStoreStatus, BigDecimal totalPrice) {
+        this.store = store;
+        this.order = order;
+        this.orderStoreStatus = orderStoreStatus;
+        this.totalPrice = totalPrice;
+        order.addOrderStore(this);
+    }
+
+    public void addOrderItems(OrderItem orderItem) {
+        this.orderItems.add(orderItem);
+    }
 }

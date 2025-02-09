@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.math.BigDecimal;
+
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
@@ -30,5 +32,12 @@ public class OrderItem extends BaseEntity {
     private int quantity;
 
     @Column(name = "unit_price")
-    private Long unitPrice;
+    private BigDecimal unitPrice;
+
+    public OrderItem(OrderStore orderStore, int quantity, BigDecimal unitPrice) {
+        this.orderStore = orderStore;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.orderStore.addOrderItems(this);
+    }
 }

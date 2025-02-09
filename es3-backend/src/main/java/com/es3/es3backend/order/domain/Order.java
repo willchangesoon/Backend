@@ -6,10 +6,12 @@ import com.es3.es3backend.payment.domain.Payment;
 import com.es3.es3backend.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class Order extends BaseEntity {
     private List<OrderStore> orderStores = new ArrayList<>();
 
     @Column(name = "total_price")
-    private Long totalPrice;
+    private BigDecimal totalPrice;
 
     @Column(name = "order_status")
     @Enumerated(value = EnumType.STRING)
@@ -42,4 +44,14 @@ public class Order extends BaseEntity {
     @OneToOne(mappedBy = "order")
     private Payment payment;
 
+    @Builder
+    public Order(BigDecimal totalPrice, OrderStatus orderStatus, User user) {
+        this.totalPrice = totalPrice;
+        this.orderStatus = orderStatus;
+        this.user = user;
+    }
+
+    public void addOrderStore(OrderStore orderStore) {
+        this.orderStores.add(orderStore);
+    }
 }
