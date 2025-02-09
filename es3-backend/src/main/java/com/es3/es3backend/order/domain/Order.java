@@ -3,7 +3,6 @@ package com.es3.es3backend.order.domain;
 import com.es3.es3backend.common.entity.BaseEntity;
 import com.es3.es3backend.order.domain.constants.OrderStatus;
 import com.es3.es3backend.payment.domain.Payment;
-import com.es3.es3backend.store.domain.Store;
 import com.es3.es3backend.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -27,7 +26,7 @@ public class Order extends BaseEntity {
     private Long id;
 
     @OneToMany(mappedBy = "order")
-    private List<OrderDetail> orderDetails = new ArrayList<>();
+    private List<OrderStore> orderStores = new ArrayList<>();
 
     @Column(name = "total_price")
     private Long totalPrice;
@@ -40,13 +39,7 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "store_id")
-    private Store store;
-
     @OneToOne(mappedBy = "order")
     private Payment payment;
-
-
 
 }

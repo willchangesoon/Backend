@@ -11,8 +11,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "tb_order_details")
-public class OrderDetail extends BaseEntity {
+@Table(name = "tb_order_items")
+public class OrderItem extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,8 +23,8 @@ public class OrderDetail extends BaseEntity {
 //    private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @JoinColumn(name = "order_store_id")
+    private OrderStore orderStore;
 
     @Column(name = "quantity")
     private int quantity;
