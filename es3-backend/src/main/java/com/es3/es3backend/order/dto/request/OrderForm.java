@@ -1,4 +1,4 @@
-package com.es3.es3backend.order.dto;
+package com.es3.es3backend.order.dto.request;
 
 import lombok.Builder;
 

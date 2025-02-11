@@ -1,7 +1,7 @@
 package com.es3.es3backend.order.controller;
 
-import com.es3.es3backend.order.dto.OrderForm;
-import com.es3.es3backend.order.service.OrderService;
+import com.es3.es3backend.order.dto.request.OrderForm;
+import com.es3.es3backend.order.service.OrderCreateService;
 import com.es3.es3backend.user.domain.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "주문" , description = "주문 API 입니다.")
 public class OrderController {
 
-    private final OrderService orderService;
+    private final OrderCreateService orderService;
 
     @PostMapping
     @Operation(summary = "주문 생성하기", description = "유저가 주문을 생성하는 api 입니다.")

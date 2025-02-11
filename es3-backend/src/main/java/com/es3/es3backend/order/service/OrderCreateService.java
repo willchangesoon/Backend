@@ -11,8 +11,8 @@ import com.es3.es3backend.order.domain.constants.OrderStoreStatus;
 import com.es3.es3backend.order.domain.repo.OrderItemRepository;
 import com.es3.es3backend.order.domain.repo.OrderRepository;
 import com.es3.es3backend.order.domain.repo.OrderStoreRepository;
-import com.es3.es3backend.order.dto.OrderForm;
-import com.es3.es3backend.order.dto.OrderItemForm;
+import com.es3.es3backend.order.dto.request.OrderForm;
+import com.es3.es3backend.order.dto.request.OrderItemForm;
 import com.es3.es3backend.store.domain.StoreRepository;
 import com.es3.es3backend.user.domain.User;
 import com.es3.es3backend.user.domain.UserRepository;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
-public class OrderService {
+public class OrderCreateService {
     private final OrderRepository orderRepository;
     private final StoreRepository storeRepository;
     private final OrderStoreRepository orderStoreRepository;
