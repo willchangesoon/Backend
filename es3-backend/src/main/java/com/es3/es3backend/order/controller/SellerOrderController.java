@@ -1,6 +1,7 @@
 package com.es3.es3backend.order.controller;
 
 import com.es3.es3backend.order.dto.OrderStoreDto;
+import com.es3.es3backend.order.dto.request.OrderStoreStatusUpdateForm;
 import com.es3.es3backend.order.service.SellerOrderService;
 import com.es3.es3backend.seller.domain.Seller;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -9,10 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,4 +32,9 @@ public class SellerOrderController {
         return ResponseEntity.status(HttpStatus.OK).body(sellerOrderService.getOrderById(seller, id));
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity updateOrderStatus(@AuthenticationPrincipal Seller seller, @PathVariable long id, @RequestBody OrderStoreStatusUpdateForm orderStoreStatusUpdateForm) {
+        sellerOrderService.updateOrderStatus(seller, id, orderStoreStatusUpdateForm);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }
