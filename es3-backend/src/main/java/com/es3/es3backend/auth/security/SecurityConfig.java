@@ -41,7 +41,7 @@ public class SecurityConfig {
                                 "/swagger-ui.html").permitAll()
                         .requestMatchers("/users/**").hasRole("USER")
                         .requestMatchers("/sellers/**").hasAnyRole("SELLER", "ADMIN")
-                        .requestMatchers( "/oauth/**", "/stores-common/**", "/common/**").permitAll()
+                        .requestMatchers( "/oauth/**", "/stores-common/**", "/common/**", "/payment-callback/**").permitAll()
                         .anyRequest().authenticated());
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

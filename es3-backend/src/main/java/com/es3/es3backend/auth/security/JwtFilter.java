@@ -46,8 +46,8 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        List<String> excludePaths = Arrays.asList("/oauth", "/stores-common");
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        List<String> excludePaths = Arrays.asList("/oauth", "/stores-common", "/payment-callback");
 
         String requestUri = request.getRequestURI();
 
