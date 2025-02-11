@@ -38,7 +38,7 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
     private final UserRepository userRepository;
 
-    public void creatOrder(User user, OrderForm orderForm) {
+    public long creatOrder(User user, OrderForm orderForm) {
         user = this.getUser(user);
 
         Map<Long, BigDecimal> priceByStore = calculateTotalPriceByShop(orderForm.items());
@@ -71,6 +71,7 @@ public class OrderService {
             orderItemList.add(orderItem);
         }
         orderItemRepository.saveAll(orderItemList);
+        return order.getId();
     }
 
     private Map<Long, BigDecimal> calculateTotalPriceByShop(List<OrderItemForm> orderItems) {

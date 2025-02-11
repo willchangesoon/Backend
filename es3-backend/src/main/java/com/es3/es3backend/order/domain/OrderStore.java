@@ -56,4 +56,8 @@ public class OrderStore extends BaseEntity {
     public void addOrderItems(OrderItem orderItem) {
         this.orderItems.add(orderItem);
     }
+
+    public void updateStatus(OrderStoreStatus orderStoreStatus) {
+        this.orderStoreStatus = orderStoreStatus;
+    }
 }
