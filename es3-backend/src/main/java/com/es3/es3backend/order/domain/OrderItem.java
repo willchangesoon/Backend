@@ -1,8 +1,11 @@
 package com.es3.es3backend.order.domain;
 
 import com.es3.es3backend.common.entity.BaseEntity;
+import com.es3.es3backend.config.exception.ErrorCode;
+import com.es3.es3backend.config.exception.OrderException;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -10,6 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.math.BigDecimal;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
@@ -34,10 +38,26 @@ public class OrderItem extends BaseEntity {
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
 
-    public OrderItem(OrderStore orderStore, int quantity, BigDecimal unitPrice) {
-        this.orderStore = orderStore;
-        this.quantity = quantity;
-        this.unitPrice = unitPrice;
-        this.orderStore.addOrderItems(this);
+    @Column(name = "is_cancelled")
+    private boolean isCancelled = false;
+
+    public static OrderItem createOrderItem(OrderStore orderStore, int quantity, BigDecimal unitPrice) {
+        return new OrderItem(null, orderStore, quantity, unitPrice, false);
     }
+
+    public BigDecimal calculateTotal() {
+        return unitPrice.multiply(BigDecimal.valueOf(quantity));
+    }
+
+    public void cancel() {
+        if (isCancelled) {
+            throw new OrderException(ErrorCode.ALREADY_CANCELLED_ITEM);
+        }
+        this.isCancelled = true;
+    }
+
+    public boolean isCancelled() {
+        return isCancelled;
+    }
+
 }

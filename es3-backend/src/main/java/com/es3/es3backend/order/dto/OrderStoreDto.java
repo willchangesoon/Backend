@@ -25,7 +25,7 @@ public record OrderStoreDto (
                 .storeId(store.getId())
                 .storeName(store.getName())
                 .status(orderStore.getOrderStoreStatus())
-                .subTotalPrice(orderStore.getTotalPrice())
+                .subTotalPrice(orderStore.calculateSubTotal())
                 .orderItemList(orderStore.getOrderItems().stream().map(OrderItemDto::fromEntity).toList())
                 .build();
     }

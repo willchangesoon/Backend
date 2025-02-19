@@ -20,7 +20,7 @@ public record PaymentInfoDto(
                 .paymentId(payment.getId())
                 .method(payment.getPaymentMethod())
                 .status(payment.getStatus())
-                .amount(payment.getAmount())
+                .amount(payment.getTotalAmount())
                 .build();
     }
 }

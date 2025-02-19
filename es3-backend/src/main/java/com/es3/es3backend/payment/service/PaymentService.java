@@ -2,15 +2,11 @@ package com.es3.es3backend.payment.service;
 
 import com.es3.es3backend.config.exception.AuthException;
 import com.es3.es3backend.config.exception.ErrorCode;
-import com.es3.es3backend.config.exception.OrderException;
 import com.es3.es3backend.config.exception.PaymentException;
-import com.es3.es3backend.order.domain.Order;
-import com.es3.es3backend.order.domain.repo.OrderRepository;
+import com.es3.es3backend.order.service.OrderService;
 import com.es3.es3backend.payment.domain.Payment;
 import com.es3.es3backend.payment.domain.PaymentRepository;
-import com.es3.es3backend.payment.domain.constants.PaymentStatus;
 import com.es3.es3backend.payment.dto.PaymentDto;
-import com.es3.es3backend.payment.dto.request.PaymentForm;
 import com.es3.es3backend.user.domain.User;
 import com.es3.es3backend.user.domain.UserRepository;
 import jakarta.transaction.Transactional;
@@ -26,25 +22,9 @@ import java.util.Map;
 @Slf4j
 public class PaymentService {
     private final PaymentRepository paymentRepository;
-    private final OrderRepository orderRepository;
+    private final OrderService orderService;
     private final UserRepository  userRepository;
 
-    public String createPayment(User user, PaymentForm paymentForm) {
-        user = this.getUser(user);
-        Order order = orderRepository.findById(paymentForm.orderId())
-                .orElseThrow(() -> new OrderException(ErrorCode.ORDER_NOT_FOUND));
-        if (!order.getUser().equals(user)) {
-            throw new OrderException(ErrorCode.ORDER_NOT_FOUND);
-        }
-        Payment payment = paymentRepository.save(Payment.builder()
-                        .paymentMethod(paymentForm.method())
-                        .order(order)
-                        .amount(paymentForm.amount())
-                        .status(PaymentStatus.PENDING)
-                .build());
-
-        return requestMoMoPayment(payment);
-    }
 
 
     private String requestMoMoPayment(Payment payment) {
@@ -85,13 +65,8 @@ public class PaymentService {
         Payment payment = paymentRepository.findByOrderId(Long.valueOf(orderId))
                 .orElseThrow(() -> new PaymentException(ErrorCode.PAYMENT_NOT_FOUND));
 
-        if ("0".equals(resultCode)) {
-            payment.paymentComplete();
-        } else {
-            payment.paymentFailed();
-        }
+        orderService.completePayment(Long.valueOf(orderId), "0".equals(resultCode));
 
-//        paymentRepository.save(payment);
         return PaymentDto.fromEntity(payment, "payment result message");
     }
 

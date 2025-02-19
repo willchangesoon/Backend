@@ -26,7 +26,7 @@ public record ListOrderStoreDto (
                 .storeId(store.getId())
                 .storeName(store.getName())
                 .status(orderStore.getOrderStoreStatus())
-                .subTotalPrice(orderStore.getTotalPrice())
+                .subTotalPrice(orderStore.calculateSubTotal())
                 .productSize(orderStore.getOrderItems().size())
 //                .coverImgUrl(orderStore.getOrderItems().get(0).getProduct()) TODO product 연결
                 .build();

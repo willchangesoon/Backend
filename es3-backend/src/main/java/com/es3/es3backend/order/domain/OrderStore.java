@@ -1,11 +1,13 @@
 package com.es3.es3backend.order.domain;
 
 import com.es3.es3backend.common.entity.BaseEntity;
+import com.es3.es3backend.config.exception.ErrorCode;
+import com.es3.es3backend.config.exception.OrderException;
 import com.es3.es3backend.order.domain.constants.OrderStoreStatus;
 import com.es3.es3backend.store.domain.Store;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -18,6 +20,7 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Table(name = "tb_order_store")
 public class OrderStore extends BaseEntity {
 
@@ -30,7 +33,7 @@ public class OrderStore extends BaseEntity {
     @JoinColumn(name = "store_id")
     private Store store;
 
-    @OneToMany(mappedBy = "orderStore")
+    @OneToMany(mappedBy = "orderStore", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     @ManyToOne
@@ -41,23 +44,80 @@ public class OrderStore extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OrderStoreStatus orderStoreStatus;
 
-    @Column(name = "total_price")
-    private BigDecimal totalPrice;
-
-    @Builder
-    public OrderStore(Store store, Order order, OrderStoreStatus orderStoreStatus, BigDecimal totalPrice) {
-        this.store = store;
-        this.order = order;
-        this.orderStoreStatus = orderStoreStatus;
-        this.totalPrice = totalPrice;
-        order.addOrderStore(this);
+    public static OrderStore createOrderStore(Store store, Order order) {
+        return new OrderStore(null, store, new ArrayList<>(), order, OrderStoreStatus.PENDING);
     }
 
-    public void addOrderItems(OrderItem orderItem) {
-        this.orderItems.add(orderItem);
+    public OrderItem addOrderItem(int quantity, BigDecimal unitPrice) {
+        OrderItem orderItem = OrderItem.createOrderItem(this, quantity, unitPrice);
+        orderItems.add(orderItem);
+        return orderItem;
     }
 
-    public void updateStatus(OrderStoreStatus orderStoreStatus) {
-        this.orderStoreStatus = orderStoreStatus;
+    public BigDecimal calculateSubTotal() {
+        return this.orderItems.stream().map(item -> item.getUnitPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public void completePayment(boolean success) {
+        if (!orderStoreStatus.equals(OrderStoreStatus.PENDING)) {
+            throw new OrderException(ErrorCode.ILLEGAL_ORDER_STATE);
+        }
+        if (success) {
+            orderStoreStatus = OrderStoreStatus.ORDER_RECEIVED;
+        }
+    }
+
+    public void prepareShipment() {
+        if(!orderStoreStatus.equals(OrderStoreStatus.ORDER_RECEIVED)) {
+            throw new OrderException(ErrorCode.ILLEGAL_ORDER_STATE);
+        }
+        orderStoreStatus = OrderStoreStatus.PREPARING_SHIPMENT;
+    }
+
+    public void shipping() {
+        if(!orderStoreStatus.equals(OrderStoreStatus.PREPARING_SHIPMENT)) {
+            throw new OrderException(ErrorCode.ILLEGAL_ORDER_STATE);
+        }
+        orderStoreStatus = OrderStoreStatus.OUT_FOR_DELIVERY;
+    }
+
+    public void delivered() {
+        if(!orderStoreStatus.equals(OrderStoreStatus.OUT_FOR_DELIVERY)) {
+            throw new OrderException(ErrorCode.ILLEGAL_ORDER_STATE);
+        }
+        orderStoreStatus = OrderStoreStatus.DELIVERED;
+    }
+
+    public void complete() {
+        if (!orderStoreStatus.equals(OrderStoreStatus.DELIVERED)) { //   배달 완료 상태에서만 주문 완료 가능
+            throw new OrderException(ErrorCode.ILLEGAL_ORDER_STATE);
+        }
+        orderStoreStatus = OrderStoreStatus.ORDER_COMPLETED;
+    }
+
+    public BigDecimal cancelItems(List<Long> itemIds) {
+        BigDecimal cancelAmount = BigDecimal.ZERO;
+
+        if(orderStoreStatus.equals(OrderStoreStatus.ORDER_COMPLETED)) {
+            throw new OrderException(ErrorCode.ILLEGAL_ORDER_STATE);
+        }
+
+        for (OrderItem item : orderItems) {
+            if (itemIds.contains(item.getId()) && !item.isCancelled()) {
+                cancelAmount = cancelAmount.add(item.calculateTotal());
+                item.cancel();
+            }
+        }
+
+        if (isAllItemsCancelled()) {
+            this.orderStoreStatus = OrderStoreStatus.CANCELLED;
+        }
+
+        return cancelAmount;
+    }
+
+    public boolean isAllItemsCancelled() {
+        return orderItems.stream().allMatch(OrderItem::isCancelled);
     }
 }

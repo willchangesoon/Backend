@@ -14,7 +14,7 @@ public record PaymentDto(
 
     public static PaymentDto fromEntity(Payment payment, String result) {
         return PaymentDto.builder()
-                .amount(payment.getAmount())
+                .amount(payment.getTotalAmount())
                 .orderId(payment.getOrder().getId())
                 .result(result)
                 .build();
