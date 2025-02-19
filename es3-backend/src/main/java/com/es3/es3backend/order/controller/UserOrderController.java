@@ -35,4 +35,16 @@ public class UserOrderController {
         return ResponseEntity.status(HttpStatus.OK).body(userOrderService.getOrderListByUser(user));
     }
 
+    @GetMapping("/{id}/delivered")
+    public ResponseEntity setDelivered(@PathVariable long id) {
+        userOrderService.delivered(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/{id}/complete")
+    public ResponseEntity setComplete(@PathVariable long id) {
+        userOrderService.complete(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 }

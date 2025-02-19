@@ -34,4 +34,15 @@ public class SellerOrderController {
         return ResponseEntity.status(HttpStatus.OK).body(sellerOrderService.getOrderById(seller, id));
     }
 
+    @GetMapping("/{id}/prepare-shipment")
+    public ResponseEntity setPrepareShipmentStatus(@AuthenticationPrincipal Seller seller, @PathVariable long id) {
+        sellerOrderService.prepareShipment(seller, id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/{id}/shipping")
+    public ResponseEntity setShipping(@AuthenticationPrincipal Seller seller, @PathVariable long id) {
+        sellerOrderService.shipping(seller, id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

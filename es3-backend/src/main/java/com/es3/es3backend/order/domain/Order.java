@@ -93,9 +93,7 @@ public class Order extends BaseEntity {
     }
 
     // 부분 취소 수행
-    public void cancel(Long storeId, List<Long> itemIds) {
-        OrderStore store = findOrderStoreById(storeId);
-
+    public void cancel(OrderStore store, List<Long> itemIds) {
         // 부분 취소 금액 계산 및 처리
         BigDecimal cancelAmount = store.cancelItems(itemIds);
 
@@ -112,7 +110,7 @@ public class Order extends BaseEntity {
         return orderStores.stream().allMatch(OrderStore::isAllItemsCancelled);
     }
 
-    private OrderStore findOrderStoreById(Long storeId) {
+    public OrderStore findOrderStoreById(Long storeId) {
         return orderStores.stream()
                 .filter(store -> store.getId().equals(storeId))
                 .findFirst()

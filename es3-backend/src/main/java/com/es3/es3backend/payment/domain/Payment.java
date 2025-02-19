@@ -70,7 +70,7 @@ public class Payment extends BaseEntity {
     }
 
     public void cancel(BigDecimal cancelAmount) {
-        if (!status.equals(PaymentStatus.SUCCEED)) {
+        if (!(status.equals(PaymentStatus.SUCCEED) || status.equals(PaymentStatus.PARTIALLY_REFUND))) {
             throw new PaymentException(ErrorCode.ILLEGAL_PAYMENT_STATE);
         }
 
