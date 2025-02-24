@@ -19,13 +19,6 @@ public class WebFluxSecurityConfig {
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
                 .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
-//                .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
-//                .addFilterBefore(new WebFluxJwtAuthFilter(), SecurityWebFiltersOrder.AUTHENTICATION)
-//                .authorizeExchange(exchanges -> exchanges
-//                        .pathMatchers("/oauth/**").permitAll()
-//                        .pathMatchers("/users", "/users/**").authenticated()
-//                        .anyExchange().authenticated()
-//                )
                 .build();
     }
 }
