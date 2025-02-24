@@ -42,7 +42,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        List<String> excludePaths = Arrays.asList("/oauth");
+        List<String> excludePaths = Arrays.asList("/user-v1/oauth");
 
         String requestUri = request.getRequestURI();
 

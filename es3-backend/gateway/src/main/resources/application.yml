@@ -6,22 +6,22 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: user-api
-          uri: http://localhost:8081
-          predicates:
-            - Path=/users/**,/sellers/**
-          filters:
-            - name: JwtAuthFilter
-
         - id: auth
           uri: http://localhost:8081
           predicates:
-            - Path=/oauth/**
+            - Path=/user-v1/oauth/**
+
+        - id: user-api
+          uri: http://localhost:8081
+          predicates:
+            - Path=/user-v1/**
+          filters:
+            - name: JwtAuthFilter
 
         - id: order-api
           uri: http://localhost:8082
           predicates:
-            - Path=/order-api/**
+            - Path=/order-v1/**
           filters:
             - JwtAuthFilter
 
