@@ -1,0 +1,38 @@
+server:
+  port: 8081
+
+
+#profile
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: user-api
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: 'jdbc:mysql://localhost:3306/es3db?serverTimezone=Asia/Seoul'
+    username: user
+    password: 1234
+  jpa:
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        hbm2ddl:
+          auto: update
+
+
+logging:
+  level:
+    root: INFO
+    org:
+      springframework: DEBUG
+      apache:
+        tomcat:
+          util:
+            compat: ERROR
+
+
+jwt:
+  secret-key: c2VjcmV0LWtleS1mb3Itc3RyYXktY2F0LW1hcC0yMDI0LTEyLTE3

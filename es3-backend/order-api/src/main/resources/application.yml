@@ -1,0 +1,44 @@
+server:
+  port: 8082
+
+#profile
+spring:
+  application:
+    name: order-api
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: 'jdbc:mysql://localhost:3306/es3db?serverTimezone=Asia/Seoul'
+    username: user
+    password: 1234
+  jpa:
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        hbm2ddl:
+          auto: update
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+
+logging:
+  level:
+    root: INFO
+    org:
+      springframework: INFO
+      apache:
+        tomcat:
+          util:
+            compat: ERROR
+
+
+jwt:
+  secret-key: c2VjcmV0LWtleS1mb3Itc3RyYXktY2F0LW1hcC0yMDI0LTEyLTE3
+
+
+user-info-url:
+  kakao: "https://kapi.kakao.com/v2/user/me"
+  naver: "https://openapi.naver.com/v1/nid/me"
+  google: "https://www.googleapis.com/oauth2/v2/userinfo"
