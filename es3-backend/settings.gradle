@@ -1,1 +1,4 @@
 rootProject.name = 'es3-backend'
+include 'user-api'
+include 'order-api'
+include 'gateway'
