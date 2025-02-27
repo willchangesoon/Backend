@@ -1,10 +1,10 @@
 package com.es3.user.seller.domain;
 
-import com.es3.user.auth.security.EncryptionUtil;
 import com.es3.user.common.entity.BaseEntity;
 import com.es3.user.config.exception.AuthException;
 import com.es3.user.config.exception.ErrorCode;
 import com.es3.user.constants.Role;
+import com.es3.user.security.EncryptionUtil;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

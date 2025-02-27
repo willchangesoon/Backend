@@ -1,4 +1,4 @@
-package com.es3.user.auth.security;
+package com.es3.user.security;
 
 import com.sun.security.auth.UserPrincipal;
 import jakarta.servlet.FilterChain;

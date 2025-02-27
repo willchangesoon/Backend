@@ -1,14 +1,14 @@
-package com.es3.user.auth.service;
+package com.es3.user.seller.service;
 
-import com.es3.user.auth.dto.seller.request.SellerSignInForm;
-import com.es3.user.auth.dto.seller.request.SellerSignUpForm;
-import com.es3.user.auth.security.EncryptionUtil;
 import com.es3.user.config.exception.AuthException;
 import com.es3.user.config.exception.ErrorCode;
 import com.es3.user.constants.Role;
+import com.es3.user.security.EncryptionUtil;
 import com.es3.user.seller.domain.Seller;
 import com.es3.user.seller.domain.SellerRepository;
 import com.es3.user.seller.dto.SellerDto;
+import com.es3.user.seller.dto.request.SellerSignInForm;
+import com.es3.user.seller.dto.request.SellerSignUpForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

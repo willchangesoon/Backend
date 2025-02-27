@@ -1,5 +1,6 @@
 package com.es3.user.user.domain;
 
+import com.es3.user.common.entity.BaseEntity;
 import com.es3.user.config.exception.AuthException;
 import com.es3.user.config.exception.ErrorCode;
 import com.es3.user.constants.Role;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "tb_users")
-public class User implements UserDetails {
+public class User extends BaseEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

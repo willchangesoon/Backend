@@ -1,7 +1,7 @@
 package com.es3.user.user.dto;
 
 
-import com.es3.user.auth.security.EncryptionUtil;
+import com.es3.user.security.EncryptionUtil;
 import com.es3.user.user.domain.User;
 import lombok.Builder;
 

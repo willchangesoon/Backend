@@ -1,4 +1,4 @@
-package com.es3.user.auth.security;
+package com.es3.user.security;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/api-docs/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .requestMatchers("/users/**", "/users").hasAnyAuthority("USER")
                         .requestMatchers("/sellers/**").hasAnyAuthority("SELLER", "ADMIN")
-                        .requestMatchers("/oauth/**", "/stores-common/**", "/common/**").permitAll()
+                        .requestMatchers("/oauth/**", "/common/**").permitAll()
                         .anyRequest().authenticated());
 
         return http.build();

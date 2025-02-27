@@ -1,4 +1,4 @@
-package com.es3.user.auth.dto.seller.response;
+package com.es3.user.seller.dto.response;
 
 import com.es3.user.seller.dto.SellerDto;
 import lombok.Builder;

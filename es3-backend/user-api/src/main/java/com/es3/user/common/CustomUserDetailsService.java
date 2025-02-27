@@ -1,4 +1,4 @@
-package com.es3.user.auth.service;
+package com.es3.user.common;
 
 import com.es3.user.config.exception.AuthException;
 import com.es3.user.config.exception.ErrorCode;

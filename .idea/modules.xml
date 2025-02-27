@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Backend.iml" filepath="$PROJECT_DIR$/.idea/Backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway/com.es3.es3-backend.gateway.main.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway/com.es3.es3-backend.gateway.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.es3.es3-backend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.es3.es3-backend.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/order-api/com.es3.es3-backend.order-api.main.iml" filepath="$PROJECT_DIR$/.idea/modules/order-api/com.es3.es3-backend.order-api.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-api/com.es3.es3-backend.user-api.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user-api/com.es3.es3-backend.user-api.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/gateway/es3-backend.gateway.main.iml" filepath="$PROJECT_DIR$/.idea/modules/gateway/es3-backend.gateway.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/es3-backend.main.iml" filepath="$PROJECT_DIR$/.idea/modules/es3-backend.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/order-api/es3-backend.order-api.main.iml" filepath="$PROJECT_DIR$/.idea/modules/order-api/es3-backend.order-api.main.iml" />

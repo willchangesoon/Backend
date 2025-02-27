@@ -4,11 +4,9 @@ import com.es3.order.banner.domain.Banner;
 import com.es3.order.common.entity.BaseEntity;
 import com.es3.order.order.domain.OrderStore;
 import com.es3.order.store.StoreStatus;
+import com.es3.order.store.dto.request.StoreCreateForm;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.ArrayList;
@@ -16,8 +14,8 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "tb_stores")
 public class Store extends BaseEntity {
@@ -49,15 +47,26 @@ public class Store extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private StoreStatus status;
 
-
     @Builder
-    public Store(String name, String logoImg, String description, String contactNumber, String address) {
+    public Store(Long sellerId, String name, String logoImg, String description, String contactNumber, String address, StoreStatus status) {
+        this.sellerId = sellerId;
         this.name = name;
         this.logoImg = logoImg;
         this.description = description;
         this.contactNumber = contactNumber;
         this.address = address;
         this.status = StoreStatus.ACTIVATE;
+    }
+
+    public static Store createStore(StoreCreateForm form, String sellerId) {
+        return Store.builder()
+                .name(form.name())
+                .logoImg(form.logoImg())
+                .address(form.address())
+                .description(form.description())
+                .contactNumber(form.contactNumber())
+                .sellerId(Long.valueOf(sellerId))
+                .build();
     }
 
     public void updateLogoImg(String logoImg) {

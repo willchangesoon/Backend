@@ -1,6 +1,6 @@
-package com.es3.user.auth.security;
+package com.es3.user.security;
 
-import com.es3.user.auth.dto.common.response.TokenResponse;
+import com.es3.user.common.dto.response.TokenResponse;
 import com.es3.user.constants.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

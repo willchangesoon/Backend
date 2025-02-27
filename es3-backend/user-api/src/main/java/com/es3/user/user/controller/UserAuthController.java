@@ -1,13 +1,13 @@
-package com.es3.user.auth.controller;
+package com.es3.user.user.controller;
 
 
-import com.es3.user.auth.dto.common.response.TokenResponse;
-import com.es3.user.auth.dto.user.request.UserSignInForm;
-import com.es3.user.auth.dto.user.request.UserSignUpForm;
-import com.es3.user.auth.security.JwtUtil;
-import com.es3.user.auth.service.UserAuthService;
+import com.es3.user.common.dto.response.TokenResponse;
 import com.es3.user.constants.Role;
+import com.es3.user.security.JwtUtil;
 import com.es3.user.user.dto.UserDto;
+import com.es3.user.user.dto.request.UserSignInForm;
+import com.es3.user.user.dto.request.UserSignUpForm;
+import com.es3.user.user.service.UserAuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
