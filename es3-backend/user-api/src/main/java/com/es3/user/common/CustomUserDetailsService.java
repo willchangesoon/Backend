@@ -2,7 +2,7 @@ package com.es3.user.common;
 
 import com.es3.user.config.exception.AuthException;
 import com.es3.user.config.exception.ErrorCode;
-import com.es3.user.seller.domain.SellerRepository;
+import com.es3.user.seller.domain.repo.SellerRepository;
 import com.es3.user.user.domain.User;
 import com.es3.user.user.domain.UserRepository;
 import jakarta.transaction.Transactional;

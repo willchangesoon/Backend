@@ -5,11 +5,9 @@ import com.es3.user.config.exception.AuthException;
 import com.es3.user.config.exception.ErrorCode;
 import com.es3.user.constants.Role;
 import com.es3.user.security.EncryptionUtil;
+import com.es3.user.seller.dto.request.SellerSignUpForm;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,10 +18,9 @@ import java.util.stream.Collectors;
 
 @Entity
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EntityListeners(AuditingEntityListener.class)
-@Builder
 @Table(name = "tb_sellers")
 public class Seller extends BaseEntity implements UserDetails {
 
@@ -39,23 +36,7 @@ public class Seller extends BaseEntity implements UserDetails {
 	private String name;
 	@Column(name = "mobile", nullable = false)
 	private String mobile;
-	@Column(name = "post_code", nullable = false)
-	private String postCode;
-	@Column(name = "address", nullable = false)
-	private String address;
 
-	//business registration number
-	@Column(name = "brn", nullable = false)
-	private String brn;
-
-	@Column(name = "bank") // nullable = false
-	private String bank;
-	@Column(name = "account_number") // nullable = false
-	private String accountNumber;
-	@Column(name = "account_holder") // nullable = false
-	private String accountHolder;
-	@Column(name = "id_number")
-	private String idNumber;
 	@Column(name = "seller_status")
 	private boolean sellerStatus = false;
 
@@ -75,6 +56,27 @@ public class Seller extends BaseEntity implements UserDetails {
 		return this.email;
 	}
 
+	@Builder
+	public Seller(String email, String password, String name, String mobile, boolean sellerStatus, Role role) {
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.mobile = mobile;
+		this.sellerStatus = sellerStatus;
+		this.role = role;
+	}
+
+	public static Seller createSeller(SellerSignUpForm.BasicInfo basicInfo) throws Exception {
+		return Seller.builder()
+				.email(basicInfo.email())
+				.password(EncryptionUtil.encrypt(basicInfo.password()))
+				.name(basicInfo.name())
+				.mobile(basicInfo.mobile())
+				.sellerStatus(false)
+				.role(Role.SELLER)
+				.build();
+	}
+
 	public void verifyPassword(String password) throws Exception {
 		if (!password.equals(EncryptionUtil.decrypt(this.password))) {
 			throw new AuthException(ErrorCode.INVALID_CREDENTIAL);
@@ -83,11 +85,6 @@ public class Seller extends BaseEntity implements UserDetails {
 
 	public Seller updateEmail(String email){
 		this.email = email;
-		return this;
-	}
-
-	public Seller updateAddress(String address) {
-		this.address = address;
 		return this;
 	}
 

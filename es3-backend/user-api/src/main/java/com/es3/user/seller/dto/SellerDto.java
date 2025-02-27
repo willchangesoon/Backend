@@ -12,13 +12,6 @@ public record SellerDto (
 	String email,
 	String name,
 	String mobile,
-	String postCode,
-	String address,
-	String brn,
-	String bank,
-	String accountNumber,
-	String accountHolder,
-	String idNumber,
 	Role role,
 	boolean sellerStatus,
 	LocalDateTime createDt,
@@ -30,13 +23,6 @@ public record SellerDto (
 			.email(seller.getEmail())
 			.name(seller.getName())
 			.mobile(seller.getMobile())
-			.postCode(seller.getPostCode())
-			.address(seller.getAddress())
-			.brn(seller.getBrn())
-			.bank(seller.getBank())
-			.accountNumber(seller.getAccountNumber())
-			.accountHolder(seller.getAccountHolder())
-			.idNumber(seller.getIdNumber())
 			.sellerStatus(seller.isSellerStatus())
 			.createDt(seller.getCreatedDate())
 			.updateDt(seller.getUpdateDate())

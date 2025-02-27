@@ -31,12 +31,6 @@ public class StoreController {
         return ResponseEntity.status(201).build();
     }
 
-    @PatchMapping("/{id}/update-address")
-    @Operation(summary = "상점 주소 수정" , description = "상점 주소 정보 수정 API 입니다.")
-    public void updateStoreAddress(@RequestHeader("X-User-Id") String userId, @PathVariable long id, @RequestBody StoreUpdateRequest.Address address) {
-        storeService.updateAddress(userId, id, address);
-    }
-
     @PatchMapping("/{id}/update-description")
     @Operation(summary = "상점 설명 수정" , description = "상점 설명 수정 API 입니다.")
     public void updateStoreDescription(@RequestHeader("X-User-Id") String userId, @PathVariable long id, @RequestBody StoreUpdateRequest.Description description) {
