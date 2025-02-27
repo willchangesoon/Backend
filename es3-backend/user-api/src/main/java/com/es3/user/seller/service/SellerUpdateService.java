@@ -3,7 +3,7 @@ package com.es3.user.seller.service;
 import com.es3.user.config.exception.AuthException;
 import com.es3.user.config.exception.ErrorCode;
 import com.es3.user.seller.domain.Seller;
-import com.es3.user.seller.domain.SellerRepository;
+import com.es3.user.seller.domain.repo.SellerRepository;
 import com.es3.user.seller.dto.SellerDto;
 import com.es3.user.seller.dto.request.SellerUpdateRequest;
 import lombok.RequiredArgsConstructor;
@@ -42,11 +42,6 @@ public class SellerUpdateService {
 		return SellerDto.fromEntity(seller.updateMobile(request.mobile()));
 	}
 
-	@Transactional
-	public SellerDto updateAddress(SellerUpdateRequest.Address request, String sellerId) {
-		Seller seller = getSeller(sellerId);
-		return SellerDto.fromEntity(seller.updateAddress(request.address()));
-	}
 
 	private Seller getSeller(String sellerId) {
 		return sellerRepository.findById(Long.valueOf(sellerId)).orElseThrow(

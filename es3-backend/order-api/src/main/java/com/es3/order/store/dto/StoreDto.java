@@ -20,7 +20,6 @@ public record StoreDto(
     public static StoreDto fromEntityFilterBanner(Store store) {
         return StoreDto.builder()
                 .name(store.getName())
-                .address(store.getAddress())
                 .description(store.getDescription())
                 .logoImg(store.getLogoImg())
                 .contactNumber(store.getContactNumber())
@@ -39,7 +38,6 @@ public record StoreDto(
     public static StoreDto fromEntity(Store store) {
         return StoreDto.builder()
                 .name(store.getName())
-                .address(store.getAddress())
                 .description(store.getDescription())
                 .logoImg(store.getLogoImg())
                 .contactNumber(store.getContactNumber())

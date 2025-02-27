@@ -41,20 +41,17 @@ public class Store extends BaseEntity {
     private String description;
     @Column(name = "contact_number", nullable = false)
     private String contactNumber;
-    @Column(name = "address", nullable = false)
-    private String address;
     @Column(name = "store_status", nullable = false)
     @Enumerated(value = EnumType.STRING)
     private StoreStatus status;
 
     @Builder
-    public Store(Long sellerId, String name, String logoImg, String description, String contactNumber, String address, StoreStatus status) {
+    public Store(Long sellerId, String name, String logoImg, String description, String contactNumber) {
         this.sellerId = sellerId;
         this.name = name;
         this.logoImg = logoImg;
         this.description = description;
         this.contactNumber = contactNumber;
-        this.address = address;
         this.status = StoreStatus.ACTIVATE;
     }
 
@@ -62,7 +59,6 @@ public class Store extends BaseEntity {
         return Store.builder()
                 .name(form.name())
                 .logoImg(form.logoImg())
-                .address(form.address())
                 .description(form.description())
                 .contactNumber(form.contactNumber())
                 .sellerId(Long.valueOf(sellerId))
@@ -79,10 +75,6 @@ public class Store extends BaseEntity {
 
     public void updateContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
-    }
-
-    public void updateAddress(String address) {
-        this.address = address;
     }
 
     public void addBanners(Banner banner) {
