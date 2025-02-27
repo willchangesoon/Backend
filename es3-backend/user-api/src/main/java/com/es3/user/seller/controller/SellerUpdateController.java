@@ -43,12 +43,4 @@ public class SellerUpdateController {
 		);
 	}
 
-	@PatchMapping("/address")
-	public ResponseEntity<SellerUpdateResponse> addressUpdate(@RequestBody SellerUpdateRequest.Address request,
-		Principal principal) {
-		return ResponseEntity.ok().body(
-			SellerUpdateResponse.from(sellerUpdateService.updateAddress(request, principal.getName()))
-		);
-	}
-
 }
