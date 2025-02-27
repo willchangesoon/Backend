@@ -1,4 +1,4 @@
-package com.es3.user.auth.dto.seller.request;
+package com.es3.user.seller.dto.request;
 
 public record SellerUpdateRequest() {
 	public record Email(String email) { }

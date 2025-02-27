@@ -1,7 +1,7 @@
 package com.es3.user.user.service;
 
 
-import com.es3.user.auth.service.ValidationUtil;
+import com.es3.user.common.ValidationUtil;
 import com.es3.user.config.exception.AuthException;
 import com.es3.user.config.exception.ErrorCode;
 import com.es3.user.user.domain.User;

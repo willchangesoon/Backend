@@ -18,6 +18,11 @@ spring:
           filters:
             - name: JwtAuthFilter
 
+        - id: order-common
+          uri: http://localhost:8082
+          predicates:
+            - Path=/order-v1/common/**
+
         - id: order-api
           uri: http://localhost:8082
           predicates:

@@ -23,13 +23,7 @@ public class StoreService {
         if (storeRepository.existsByName(form.name())) {
             throw new StoreException(ErrorCode.REGISTERED_NAME);
         }
-        storeRepository.save(Store.builder()
-                .name(form.name())
-                .description(form.description())
-                .logoImg(form.logoImg())
-                .address(form.address())
-                .contactNumber(form.contactNumber())
-                .build());
+        storeRepository.save(Store.createStore(form, sellerId));
     }
 
     public void updateContactNumber(String sellerId, long id, StoreUpdateRequest.ContactNumber contactNumber) {

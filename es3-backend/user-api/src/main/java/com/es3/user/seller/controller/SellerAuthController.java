@@ -1,12 +1,12 @@
-package com.es3.user.auth.controller;
+package com.es3.user.seller.controller;
 
-import com.es3.user.auth.dto.common.response.TokenResponse;
-import com.es3.user.auth.dto.seller.request.SellerSignInForm;
-import com.es3.user.auth.dto.seller.request.SellerSignUpForm;
-import com.es3.user.auth.security.JwtUtil;
-import com.es3.user.auth.service.SellerAuthService;
+import com.es3.user.common.dto.response.TokenResponse;
 import com.es3.user.constants.Role;
+import com.es3.user.security.JwtUtil;
 import com.es3.user.seller.dto.SellerDto;
+import com.es3.user.seller.dto.request.SellerSignInForm;
+import com.es3.user.seller.dto.request.SellerSignUpForm;
+import com.es3.user.seller.service.SellerAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

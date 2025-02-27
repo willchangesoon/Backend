@@ -1,8 +1,8 @@
 package com.es3.user.seller.controller;
 
 
-import com.es3.user.auth.dto.seller.request.SellerUpdateRequest;
-import com.es3.user.auth.dto.seller.response.SellerUpdateResponse;
+import com.es3.user.seller.dto.request.SellerUpdateRequest;
+import com.es3.user.seller.dto.response.SellerUpdateResponse;
 import com.es3.user.seller.service.SellerUpdateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

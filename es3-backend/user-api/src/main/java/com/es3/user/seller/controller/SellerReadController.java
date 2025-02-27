@@ -1,6 +1,6 @@
 package com.es3.user.seller.controller;
 
-import com.es3.user.auth.dto.seller.response.SellerDetail;
+import com.es3.user.seller.dto.response.SellerDetail;
 import com.es3.user.seller.service.SellerReadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

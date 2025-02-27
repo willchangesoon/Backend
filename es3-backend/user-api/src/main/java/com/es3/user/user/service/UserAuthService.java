@@ -1,12 +1,13 @@
-package com.es3.user.auth.service;
+package com.es3.user.user.service;
 
-import com.es3.user.auth.dto.user.request.UserSignUpForm;
-import com.es3.user.auth.security.EncryptionUtil;
+import com.es3.user.common.ValidationUtil;
 import com.es3.user.config.exception.AuthException;
 import com.es3.user.config.exception.ErrorCode;
+import com.es3.user.security.EncryptionUtil;
 import com.es3.user.user.domain.User;
 import com.es3.user.user.domain.UserRepository;
 import com.es3.user.user.dto.UserDto;
+import com.es3.user.user.dto.request.UserSignUpForm;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
