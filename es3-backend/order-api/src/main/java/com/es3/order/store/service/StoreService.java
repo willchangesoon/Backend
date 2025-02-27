@@ -32,11 +32,6 @@ public class StoreService {
         store.updateContactNumber(contactNumber.getContactNumber());
     }
 
-    public void updateAddress(String sellerId, long id, StoreUpdateRequest.Address address) {
-        Store store = validate(sellerId, id);
-        store.updateAddress(address.getAddress());
-    }
-
     public void updateDescription(String sellerId, long id, StoreUpdateRequest.Description description) {
         Store store = validate(sellerId, id);
         store.updateDescription(description.getDescription());
