@@ -48,8 +48,8 @@ public class OrderStore extends BaseEntity {
         return new OrderStore(null, store, new ArrayList<>(), order, OrderStoreStatus.PENDING);
     }
 
-    public OrderItem addOrderItem(int quantity, BigDecimal unitPrice) {
-        OrderItem orderItem = OrderItem.createOrderItem(this, quantity, unitPrice);
+    public OrderItem addOrderItem(Long productOptionItem, int quantity, BigDecimal unitPrice) {
+        OrderItem orderItem = OrderItem.createOrderItem(productOptionItem, this, quantity, unitPrice);
         orderItems.add(orderItem);
         return orderItem;
     }

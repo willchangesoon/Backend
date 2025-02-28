@@ -24,12 +24,20 @@ public enum ErrorCode {
     //order exception
     ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, 4001, "주문 내역이 존재하지 않습니다."),
     ILLEGAL_ORDER_STATE(HttpStatus.NOT_ACCEPTABLE, 4002, "결제 처리 할  수 없는 상태의 주문입니다."),
+    ORDER_ITEM_NOT_FOUND(HttpStatus.NOT_ACCEPTABLE, 4003, "상세 주문 내역이 존재하지 않습니다."),
     //payment exception
     PAYMENT_NOT_FOUND(HttpStatus.NOT_FOUND, 5001, "결제 내역이 존재하지 않습니다. "),
     ILLEGAL_PAYMENT_STATE(HttpStatus.NOT_ACCEPTABLE, 5002, "결제 상태를 변경 할 수 없습니다."),
     ALREADY_CANCELLED_ITEM(HttpStatus.NOT_ACCEPTABLE, 5003, "이미 취소된 상품입니다."),
     ORDER_STORE_NOT_FOUND(HttpStatus.NOT_FOUND, 5004, "세부 주문 내역이 없습니다."),
-    INVALID_CANCEL_AMOUNT(HttpStatus.NOT_ACCEPTABLE, 5005, "불가능한 환불금액입니다.");
+    INVALID_CANCEL_AMOUNT(HttpStatus.NOT_ACCEPTABLE, 5005, "불가능한 환불금액입니다."),
+    //product exception
+    PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, 6001, "상품이 존재하지 않습니다."),
+    INVALID_STOCK_QUANTITY(HttpStatus.NOT_ACCEPTABLE, 6002, "0 이하의 값으로는 재고를 증가시킬 수  없습니다."),
+    INSUFFICIENT_STOCK(HttpStatus.NOT_ACCEPTABLE, 6003, "재고가 부족합니다"),
+    STOCK_QUANTITY_ARITHMETIC(HttpStatus.NOT_ACCEPTABLE, 6004, "재고를 더 증가시킬 수 없습니다."),
+    ;
+
 
 
     private final HttpStatus httpStatus;

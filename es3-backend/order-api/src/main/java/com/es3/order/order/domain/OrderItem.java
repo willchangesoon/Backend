@@ -24,9 +24,8 @@ public class OrderItem extends BaseEntity {
     @Column(name = "id")
     private Long id;
 
-//    @OneToOne
-//    @JoinColumn(name = "product_id")
-//    private Product product;
+    @Column(name = "product_option_id")
+    private Long productOptionId;
 
     @ManyToOne
     @JoinColumn(name = "order_store_id")
@@ -41,8 +40,8 @@ public class OrderItem extends BaseEntity {
     @Column(name = "is_cancelled")
     private boolean isCancelled = false;
 
-    public static OrderItem createOrderItem(OrderStore orderStore, int quantity, BigDecimal unitPrice) {
-        return new OrderItem(null, orderStore, quantity, unitPrice, false);
+    public static OrderItem createOrderItem(Long productOptionId, OrderStore orderStore, int quantity, BigDecimal unitPrice) {
+        return new OrderItem(null, productOptionId, orderStore, quantity, unitPrice, false);
     }
 
     public BigDecimal calculateTotal() {

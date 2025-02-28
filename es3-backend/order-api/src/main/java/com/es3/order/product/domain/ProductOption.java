@@ -1,6 +1,8 @@
 package com.es3.order.product.domain;
 
 import com.es3.order.common.entity.BaseEntity;
+import com.es3.order.config.exception.ErrorCode;
+import com.es3.order.config.exception.ProductException;
 import com.es3.order.product.dto.ProductOptionForm;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -41,5 +43,27 @@ public class ProductOption extends BaseEntity {
 
     public static ProductOption createOption(Product product, ProductOptionForm form) {
         return new ProductOption(null, product, form.name(), form.value(), form.quantity(), form.additionalPrice());
+    }
+
+    public void increaseStock(int stockQuantity) {
+        validateStockQuantity(stockQuantity);
+        if (this.quantity + stockQuantity < 0) {
+            throw new ProductException(ErrorCode.STOCK_QUANTITY_ARITHMETIC);
+        }
+        this.quantity += stockQuantity;
+    }
+
+    public void decreaseStock(int stockQuantity) {
+        validateStockQuantity(stockQuantity);
+        if (this.quantity < stockQuantity) {
+            throw new ProductException(ErrorCode.INSUFFICIENT_STOCK);
+        }
+        this.quantity -= stockQuantity;
+    }
+
+    private static void validateStockQuantity(int stockQuantity) {
+        if (stockQuantity <= 0) {
+            throw new ProductException(ErrorCode.INVALID_STOCK_QUANTITY);
+        }
     }
 }

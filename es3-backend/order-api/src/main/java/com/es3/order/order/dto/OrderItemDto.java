@@ -27,7 +27,6 @@ public record OrderItemDto(
                 .id(orderItem.getId())
                 .unitPrice(orderItem.getUnitPrice())
                 .quantity(orderItem.getQuantity())
-//                .productDto(orderItem.get) TODO: product 연결
                 .build();
     }
 }

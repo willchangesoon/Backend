@@ -1,6 +1,5 @@
 package com.es3.order.product.domain;
 
-import com.es3.order.category.domain.Category;
 import com.es3.order.common.entity.BaseEntity;
 import com.es3.order.product.dto.ProductCreateForm;
 import com.es3.order.product.dto.ProductOptionForm;
@@ -38,9 +37,8 @@ public class Product extends BaseEntity {
     @Column(name = "price")
     private BigDecimal price;
 
-    @OneToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @Column(name = "category_id")
+    private Long category;
 
     @Column(name = "main_img")
     private String mainImg;
@@ -58,8 +56,8 @@ public class Product extends BaseEntity {
     private List<ProductOption> productOptions = new ArrayList<>();
 
 
-    public static Product createProduct(ProductCreateForm form, Store store, Category category) {
-        return new Product(null, store, form.title(), form.price(), category, form.mainImage(),
+    public static Product createProduct(ProductCreateForm form, Store store) {
+        return new Product(null, store, form.title(), form.price(), form.categoryId(), form.mainImage(),
                 form.additionalImages(), form.description(), new ArrayList<>());
     }
 

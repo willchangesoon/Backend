@@ -3,8 +3,11 @@ package com.es3.order.product.service;
 import com.es3.order.category.domain.Category;
 import com.es3.order.category.domain.CategoryRepository;
 import com.es3.order.config.exception.ErrorCode;
+import com.es3.order.config.exception.ProductException;
 import com.es3.order.config.exception.StoreException;
 import com.es3.order.product.domain.Product;
+import com.es3.order.product.domain.ProductOption;
+import com.es3.order.product.domain.repo.ProductOptionRepository;
 import com.es3.order.product.domain.repo.ProductRepository;
 import com.es3.order.product.dto.ProductCreateForm;
 import com.es3.order.store.domain.Store;
@@ -17,14 +20,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
+    private final ProductOptionRepository optionRepository;
     private final StoreRepository storeRepository;
     private final CategoryRepository categoryRepository;
 
     @Transactional
     public void createProduct(String userId, ProductCreateForm productCreateForm) {
         Store store = getStoreBySeller(productCreateForm.storeId(), Long.parseLong(userId));
-        Category category = getCategory(productCreateForm);
-        Product product = Product.createProduct(productCreateForm, store, category);
+        Product product = Product.createProduct(productCreateForm, store);
         product.addProductOptions(productCreateForm.productOptionList());
         productRepository.save(product);
     }
@@ -37,5 +40,17 @@ public class ProductService {
     private Store getStoreBySeller(Long storeId, Long sellerId) {
         return storeRepository.findByIdAndSellerId(storeId, sellerId)
                 .orElseThrow(() -> new StoreException(ErrorCode.STORE_NOT_FOUND));
+    }
+
+    public void decreaseStock(Long productOptionId, int quantity) {
+        ProductOption productOption = optionRepository.findById(productOptionId)
+                .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));
+        productOption.decreaseStock(quantity);
+    }
+
+    public void increaseStock(Long productOptionId, int quantity) {
+        ProductOption productOption = optionRepository.findById(productOptionId)
+                .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));
+        productOption.increaseStock(quantity);
     }
 }

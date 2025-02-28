@@ -107,10 +107,17 @@ public class Order extends BaseEntity {
         return orderStores.stream().allMatch(OrderStore::isAllItemsCancelled);
     }
 
-    public OrderStore findOrderStoreById(Long storeId) {
+    public OrderStore findOrderStoreByOrderItemId(Long orderItemId) {
         return orderStores.stream()
-                .filter(store -> store.getId().equals(storeId))
+                .filter(store -> store.getOrderItems().stream()
+                        .anyMatch(item -> item.getId().equals(orderItemId)))
                 .findFirst()
                 .orElseThrow(() -> new OrderException(ErrorCode.ORDER_STORE_NOT_FOUND));
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderStores.stream()
+                .flatMap(orderStore -> orderStore.getOrderItems().stream())
+                .toList();
     }
 }

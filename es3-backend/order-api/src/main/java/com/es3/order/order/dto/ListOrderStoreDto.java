@@ -14,9 +14,7 @@ public record ListOrderStoreDto (
         String storeName,
         OrderStoreStatus status,
         BigDecimal subTotalPrice,
-        int productSize,
-        String coverImgUrl,
-        String productTitle
+        int productSize
 ){
 
     public static ListOrderStoreDto fromEntity(OrderStore orderStore) {
@@ -28,7 +26,6 @@ public record ListOrderStoreDto (
                 .status(orderStore.getOrderStoreStatus())
                 .subTotalPrice(orderStore.calculateSubTotal())
                 .productSize(orderStore.getOrderItems().size())
-//                .coverImgUrl(orderStore.getOrderItems().get(0).getProduct()) TODO product 연결
                 .build();
     }
 }

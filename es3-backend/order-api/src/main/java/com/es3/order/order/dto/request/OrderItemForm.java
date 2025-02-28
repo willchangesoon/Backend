@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 @Builder
 public record OrderItemForm(
         Long productId,
+        Long productOptionId,
         int quantity,
         BigDecimal unitPrice,
         Long shopId
