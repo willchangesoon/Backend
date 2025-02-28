@@ -18,4 +18,6 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     List<Store> findAllByStatusAndByCursor(@Param("cursor") Long cursor, @Param("status") StoreStatus status, Pageable pageable);
 
     Optional<Store> findBySellerId(Long sellerId);
+
+    Optional<Store> findByIdAndSellerId(Long storeId, Long sellerId);
 }
