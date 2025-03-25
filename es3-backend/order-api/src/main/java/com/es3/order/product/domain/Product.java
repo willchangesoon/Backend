@@ -37,6 +37,9 @@ public class Product extends BaseEntity {
     @Column(name = "price")
     private BigDecimal price;
 
+    @Column(name = "discount")
+    private int discount;
+
     @Column(name = "visibility")
     private boolean visibility;
 
@@ -63,7 +66,8 @@ public class Product extends BaseEntity {
 
 
     public static Product createProduct(ProductCreateForm form, Store store) {
-        return new Product(null, store, form.title(), form.price(), form.visibility(), form.deliveryType(), form.categoryId(), form.mainImage(),
+        //todo discount 정리
+        return new Product(null, store, form.title(), form.price(), 0, form.visibility(), form.deliveryType(), form.categoryId(), form.mainImage(),
                 form.additionalImages(), form.description(), new ArrayList<>());
     }
 
