@@ -7,6 +7,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Transactional
 @Service
 @RequiredArgsConstructor
@@ -15,5 +17,9 @@ public class CategoryService {
 
     public void createCategory(CategoryDto categoryDto) {
         categoryRepository.save(Category.create(categoryDto));
+    }
+
+    public List<CategoryDto> getCategories() {
+        return categoryRepository.findAll().stream().map(CategoryDto::fromEntity).toList();
     }
 }

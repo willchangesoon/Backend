@@ -26,7 +26,7 @@ public class ProductService {
 
     @Transactional
     public void createProduct(String userId, ProductCreateForm productCreateForm) {
-        Store store = getStoreBySeller(productCreateForm.storeId(), Long.parseLong(userId));
+        Store store = getStoreBySeller(Long.parseLong(userId));
         Product product = Product.createProduct(productCreateForm, store);
         product.addProductOptions(productCreateForm.productOptionList());
         productRepository.save(product);
@@ -37,8 +37,8 @@ public class ProductService {
                 .orElseThrow(() -> new RuntimeException("category not found"));
     }
 
-    private Store getStoreBySeller(Long storeId, Long sellerId) {
-        return storeRepository.findByIdAndSellerId(storeId, sellerId)
+    private Store getStoreBySeller(Long sellerId) {
+        return storeRepository.findBySellerId(sellerId)
                 .orElseThrow(() -> new StoreException(ErrorCode.STORE_NOT_FOUND));
     }
 

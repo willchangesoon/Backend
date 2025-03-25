@@ -37,6 +37,12 @@ public class Product extends BaseEntity {
     @Column(name = "price")
     private BigDecimal price;
 
+    @Column(name = "visibility")
+    private boolean visibility;
+
+    @Column(name = "deliveryType")
+    private String deliveryType;
+
     @Column(name = "category_id")
     private Long category;
 
@@ -57,11 +63,12 @@ public class Product extends BaseEntity {
 
 
     public static Product createProduct(ProductCreateForm form, Store store) {
-        return new Product(null, store, form.title(), form.price(), form.categoryId(), form.mainImage(),
+        return new Product(null, store, form.title(), form.price(), form.visibility(), form.deliveryType(), form.categoryId(), form.mainImage(),
                 form.additionalImages(), form.description(), new ArrayList<>());
     }
 
     public void addProductOptions(List<ProductOptionForm> optionForms) {
+        if (optionForms == null || optionForms.isEmpty())  return;
         List<ProductOption> options = optionForms.stream()
                 .map(form -> ProductOption.createOption(this, form))
                 .toList();
