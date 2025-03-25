@@ -1,6 +1,8 @@
 package com.es3.gateway.security;
 
 import com.es3.gateway.domain.common.Role;
+import com.es3.gateway.exception.ErrorCode;
+import com.es3.gateway.exception.TokenException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -30,6 +32,7 @@ public class JwtProvider {
             Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token);
         }catch (ExpiredJwtException e) {
             log.error("Token expired", e);
+            throw new TokenException(ErrorCode.EXPIRED_TOKEN);
         } catch (UnsupportedJwtException | MalformedJwtException e) {
             log.error("Invalid JWT - JWT Exception", e);
         } catch (SecurityException | IllegalArgumentException e) {

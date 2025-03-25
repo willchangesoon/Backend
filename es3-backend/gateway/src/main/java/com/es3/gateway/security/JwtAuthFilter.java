@@ -1,7 +1,6 @@
 package com.es3.gateway.security;
 
 import com.es3.gateway.domain.common.Role;
-import io.jsonwebtoken.Claims;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -26,7 +25,6 @@ public class JwtAuthFilter extends AbstractGatewayFilterFactory<JwtAuthFilter.Co
             ServerHttpRequest request = exchange.getRequest();
             String token = extractToken(exchange.getRequest().getHeaders().getFirst("Authorization"));
             if (token != null && jwtProvider.validateToken(token)) {
-                Claims claims = jwtProvider.getClaims(token);
                 String userId = jwtProvider.getUserId(token); // JWT subject = userId
                 Role role = jwtProvider.getRoles(token); // role 정보 가져오기
                 String mail = jwtProvider.getEmail(token);

@@ -4,10 +4,12 @@ package com.es3.user.user.controller;
 import com.es3.user.common.dto.response.TokenResponse;
 import com.es3.user.constants.Role;
 import com.es3.user.security.JwtUtil;
+import com.es3.user.user.domain.User;
 import com.es3.user.user.dto.UserDto;
 import com.es3.user.user.dto.request.UserSignInForm;
 import com.es3.user.user.dto.request.UserSignUpForm;
 import com.es3.user.user.service.UserAuthService;
+import com.es3.user.user.service.UserUpdateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,12 +19,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/oauth/users")
 public class UserAuthController {
     private final UserAuthService userJoinService;
+    private final UserUpdateService userUpdateService;
     private final JwtUtil jwtUtil;
 
     @PostMapping
@@ -35,5 +40,18 @@ public class UserAuthController {
     public ResponseEntity<TokenResponse> signIn(@RequestBody UserSignInForm request) throws Exception {
         UserDto userDto = userJoinService.login(request.email(), request.password());
         return ResponseEntity.status(200).body(jwtUtil.generateTokens(userDto.id(), userDto.email(), Role.USER));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refreshAccessToken(@RequestBody Map<String, String> request) {
+        String refreshToken = request.get("refreshToken");
+        if (!jwtUtil.validateToken(refreshToken)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid refresh token");
+        }
+        String userId = jwtUtil.getUserId(refreshToken);
+        User user = userUpdateService.getUser(userId);
+
+        String newAccessToken = jwtUtil.generateAccessToken(user.getId(), user.getEmail(), user.getRole());
+        return ResponseEntity.ok(Map.of("accessToken", newAccessToken));
     }
 }
