@@ -1,9 +1,12 @@
 package com.es3.order.product.service;
 
 import com.es3.order.common.pagination.CursorPageResponse;
+import com.es3.order.config.exception.ErrorCode;
+import com.es3.order.config.exception.ProductException;
 import com.es3.order.product.domain.Product;
 import com.es3.order.product.domain.repo.ProductRepository;
-import com.es3.order.product.dto.ProductResponse;
+import com.es3.order.product.dto.response.ProductDetailResponse;
+import com.es3.order.product.dto.response.ProductResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -34,5 +37,12 @@ public class ProductCommonService {
                 .toList();
 
         return CursorPageResponse.of(responses, pageSize);
+    }
+
+    public ProductDetailResponse getProductDetail(Long id) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));
+        product.getAdditionalImages().size();   //lazy 초기화용
+        return ProductDetailResponse.fromEntity(product);
     }
 }

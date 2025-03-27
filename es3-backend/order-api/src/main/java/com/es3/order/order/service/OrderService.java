@@ -11,6 +11,7 @@ import com.es3.order.order.domain.repo.OrderRepository;
 import com.es3.order.order.dto.OrderDetailDto;
 import com.es3.order.order.dto.request.OrderItemForm;
 import com.es3.order.payment.domain.constants.PaymentMethod;
+import com.es3.order.product.domain.ProductSKU;
 import com.es3.order.product.service.ProductService;
 import com.es3.order.store.domain.Store;
 import com.es3.order.store.domain.StoreRepository;
@@ -36,6 +37,7 @@ public class OrderService {
     public long creatOrder(String userId, List<Long> storeIds, List<OrderItemForm> orderItemFormList, PaymentMethod paymentMethod) {
         Order order = Order.createOrder(Long.valueOf(userId));
         orderRepository.save(order);
+
         Map<Long, List<OrderItemForm>> groupedByShop = orderItemFormList.stream()
                 .collect(Collectors.groupingBy(OrderItemForm::shopId));
 
@@ -43,8 +45,10 @@ public class OrderService {
             Store store = storeRepository.findById(storeId)
                     .orElseThrow(() -> new StoreException(ErrorCode.STORE_NOT_FOUND));
             OrderStore orderStore = order.addOrderStore(store);
-            groupedByShop.get(storeId).forEach((items) -> {
-                orderStore.addOrderItem(items.productOptionId(), items.quantity(), items.unitPrice());
+
+            groupedByShop.get(storeId).forEach((item) -> {
+                ProductSKU sku = productService.getSKU(item.skuId());  // SKU 조회
+                orderStore.addOrderItem(sku, item.quantity(), item.unitPrice());
             });
         }
 
@@ -78,7 +82,7 @@ public class OrderService {
     private void decreaseStock(boolean success, Order order) {
         if (success) {
             order.getOrderItems().forEach(orderItem ->
-                    productService.decreaseStock(orderItem.getProductOptionId(), orderItem.getQuantity())
+                    productService.decreaseStockBySKU(orderItem.getSkuId(), orderItem.getQuantity())
             );
         }
     }
@@ -91,7 +95,7 @@ public class OrderService {
         }
 
         orderItems.forEach(item ->
-                productService.increaseStock(item.getProductOptionId(), item.getQuantity())
+                productService.increaseStockBySKU(item.getSkuId(), item.getQuantity())
         );
     }
 }

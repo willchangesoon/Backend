@@ -1,4 +1,4 @@
-package com.es3.order.product.dto;
+package com.es3.order.product.dto.response;
 
 import com.es3.order.common.pagination.Identifiable;
 import com.es3.order.product.domain.Product;

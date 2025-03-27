@@ -6,12 +6,14 @@ import java.util.List;
 public record ProductCreateForm(
         String title,
         BigDecimal price,
-        Long categoryId,
         boolean visibility,
         String deliveryType,
-        String description,
+        Long categoryId,
         String mainImage,
         List<String> additionalImages,
-        List<ProductOptionForm> productOptionList
+        String description,
+
+        List<ProductOptionGroupForm> optionGroups,
+        List<SKUForm> skus
 ) {
 }

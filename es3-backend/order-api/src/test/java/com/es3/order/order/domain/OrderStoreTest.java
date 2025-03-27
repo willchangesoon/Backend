@@ -1,6 +1,6 @@
 package com.es3.order.order.domain;
 
-import com.es3.es3backend.order.domain.constants.OrderStoreStatus;
+import com.es3.order.order.domain.constants.OrderStoreStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

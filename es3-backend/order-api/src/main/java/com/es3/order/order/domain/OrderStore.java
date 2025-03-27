@@ -4,6 +4,7 @@ import com.es3.order.common.entity.BaseEntity;
 import com.es3.order.config.exception.ErrorCode;
 import com.es3.order.config.exception.OrderException;
 import com.es3.order.order.domain.constants.OrderStoreStatus;
+import com.es3.order.product.domain.ProductSKU;
 import com.es3.order.store.domain.Store;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -48,11 +49,12 @@ public class OrderStore extends BaseEntity {
         return new OrderStore(null, store, new ArrayList<>(), order, OrderStoreStatus.PENDING);
     }
 
-    public OrderItem addOrderItem(Long productOptionItem, int quantity, BigDecimal unitPrice) {
-        OrderItem orderItem = OrderItem.createOrderItem(productOptionItem, this, quantity, unitPrice);
+    public OrderItem addOrderItem(ProductSKU sku, int quantity, BigDecimal unitPrice) {
+        OrderItem orderItem = OrderItem.createOrderItem(sku, this, quantity, unitPrice);
         orderItems.add(orderItem);
         return orderItem;
     }
+
 
     public BigDecimal calculateSubTotal() {
         return this.orderItems.stream().map(item -> item.getUnitPrice().multiply(BigDecimal.valueOf(item.getQuantity())))

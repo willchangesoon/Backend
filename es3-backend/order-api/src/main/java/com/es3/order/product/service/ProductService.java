@@ -6,9 +6,9 @@ import com.es3.order.config.exception.ErrorCode;
 import com.es3.order.config.exception.ProductException;
 import com.es3.order.config.exception.StoreException;
 import com.es3.order.product.domain.Product;
-import com.es3.order.product.domain.ProductOption;
-import com.es3.order.product.domain.repo.ProductOptionRepository;
+import com.es3.order.product.domain.ProductSKU;
 import com.es3.order.product.domain.repo.ProductRepository;
+import com.es3.order.product.domain.repo.ProductSKURepository;
 import com.es3.order.product.dto.ProductCreateForm;
 import com.es3.order.store.domain.Store;
 import com.es3.order.store.domain.StoreRepository;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
-    private final ProductOptionRepository optionRepository;
+    private final ProductSKURepository productSKURepository;
     private final StoreRepository storeRepository;
     private final CategoryRepository categoryRepository;
 
@@ -28,7 +28,7 @@ public class ProductService {
     public void createProduct(String userId, ProductCreateForm productCreateForm) {
         Store store = getStoreBySeller(Long.parseLong(userId));
         Product product = Product.createProduct(productCreateForm, store);
-        product.addProductOptions(productCreateForm.productOptionList());
+        product.applyOptionsAndSKUs(productCreateForm.optionGroups(), productCreateForm.skus());
         productRepository.save(product);
     }
 
@@ -42,15 +42,18 @@ public class ProductService {
                 .orElseThrow(() -> new StoreException(ErrorCode.STORE_NOT_FOUND));
     }
 
-    public void decreaseStock(Long productOptionId, int quantity) {
-        ProductOption productOption = optionRepository.findById(productOptionId)
-                .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));
-        productOption.decreaseStock(quantity);
+    public ProductSKU getSKU(Long skuId) {
+        return productSKURepository.findById(skuId)
+                .orElseThrow(() -> new ProductException(ErrorCode.SKU_NOT_FOUND));
     }
 
-    public void increaseStock(Long productOptionId, int quantity) {
-        ProductOption productOption = optionRepository.findById(productOptionId)
-                .orElseThrow(() -> new ProductException(ErrorCode.PRODUCT_NOT_FOUND));
-        productOption.increaseStock(quantity);
+    public void decreaseStockBySKU(Long skuId, int quantity) {
+        ProductSKU sku = getSKU(skuId);
+        sku.decreaseStock(quantity);
+    }
+
+    public void increaseStockBySKU(Long skuId, int quantity) {
+        ProductSKU sku = getSKU(skuId);
+        sku.increaseStock(quantity);
     }
 }

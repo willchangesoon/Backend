@@ -1,15 +1,13 @@
 package com.es3.order.product.controller;
 
 import com.es3.order.common.pagination.CursorPageResponse;
-import com.es3.order.product.dto.ProductResponse;
+import com.es3.order.product.dto.response.ProductDetailResponse;
+import com.es3.order.product.dto.response.ProductResponse;
 import com.es3.order.product.service.ProductCommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +29,10 @@ public class ProductCommonController {
     ) {
         CursorPageResponse<ProductResponse> response = productCommonService.getProductsByCursor(cursor, size);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDetailResponse> getProductDetail(@PathVariable("id") Long id)   {
+        return ResponseEntity.ok(productCommonService.getProductDetail(id));
     }
 }
