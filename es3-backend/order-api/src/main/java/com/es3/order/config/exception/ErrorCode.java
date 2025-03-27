@@ -36,7 +36,9 @@ public enum ErrorCode {
     INVALID_STOCK_QUANTITY(HttpStatus.NOT_ACCEPTABLE, 6002, "0 이하의 값으로는 재고를 증가시킬 수  없습니다."),
     INSUFFICIENT_STOCK(HttpStatus.NOT_ACCEPTABLE, 6003, "재고가 부족합니다"),
     STOCK_QUANTITY_ARITHMETIC(HttpStatus.NOT_ACCEPTABLE, 6004, "재고를 더 증가시킬 수 없습니다."),
-    SKU_NOT_FOUND(HttpStatus.NOT_FOUND, 6005, "상품 SKU 가 존재하지 않습니다.");
+    SKU_NOT_FOUND(HttpStatus.NOT_FOUND, 6005, "상품 SKU 가 존재하지 않습니다."),
+    //cart exception
+    CART_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, 7001, "장바구니가 존재하지 않습니다." );
 
 
 
