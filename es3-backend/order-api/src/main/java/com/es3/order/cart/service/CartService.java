@@ -2,6 +2,7 @@ package com.es3.order.cart.service;
 
 import com.es3.order.cart.domain.CartItem;
 import com.es3.order.cart.domain.repo.CartItemRepository;
+import com.es3.order.cart.dto.CartItemResponse;
 import com.es3.order.config.exception.CartException;
 import com.es3.order.config.exception.ErrorCode;
 import com.es3.order.config.exception.ProductException;
@@ -33,26 +34,29 @@ public class CartService {
                 .orElseGet(() -> cartItemRepository.save(CartItem.create(userId, sku, quantity)));
     }
 
-    /**
-     * 유저 장바구니 조회
-     */
     @Transactional(readOnly = true)
-    public List<CartItem> getUserCartItems(Long userId) {
-        return cartItemRepository.findByUserId(userId);
+    public List<CartItemResponse> getUserCartItems(Long userId) {
+        return cartItemRepository.findByUserId(userId).stream()
+                .map(CartItemResponse::fromEntity)
+                .toList();
     }
 
-    /**
-     * 수량 변경
-     */
-    public void updateQuantity(Long cartItemId, int newQuantity) {
+    @Transactional
+    public void updateCartItem(Long cartItemId, Integer quantity, Long newSkuId) {
         CartItem item = cartItemRepository.findById(cartItemId)
                 .orElseThrow(() -> new CartException(ErrorCode.CART_ITEM_NOT_FOUND));
-        item.changeQuantity(newQuantity);
+
+        if (quantity != null) {
+            item.changeQuantity(quantity);
+        }
+
+        if (newSkuId != null) {
+            ProductSKU newSku = productSKURepository.findById(newSkuId)
+                    .orElseThrow(() -> new ProductException(ErrorCode.SKU_NOT_FOUND));
+            item.changeSku(newSku); // CartItem에서 SKU를 교체하는 메서드
+        }
     }
 
-    /**
-     * 장바구니 항목 삭제
-     */
     public void deleteCartItem(Long cartItemId) {
         cartItemRepository.deleteById(cartItemId);
     }

@@ -2,7 +2,9 @@ package com.es3.order.product.controller;
 
 import com.es3.order.common.pagination.CursorPageResponse;
 import com.es3.order.product.dto.response.ProductDetailResponse;
+import com.es3.order.product.dto.response.ProductOptionGroupResponse;
 import com.es3.order.product.dto.response.ProductResponse;
+import com.es3.order.product.dto.response.ProductSKUResponse;
 import com.es3.order.product.service.ProductCommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,5 +36,15 @@ public class ProductCommonController {
     @GetMapping("/{id}")
     public ResponseEntity<ProductDetailResponse> getProductDetail(@PathVariable("id") Long id)   {
         return ResponseEntity.ok(productCommonService.getProductDetail(id));
+    }
+
+    @GetMapping("/{id}/options")
+    public ResponseEntity<List<ProductOptionGroupResponse>> getProductOptions(@PathVariable("id") Long id) {
+        return ResponseEntity.ok( productCommonService.getProductOptions(id));
+    }
+
+    @GetMapping("/{id}/skus")
+    public ResponseEntity<List<ProductSKUResponse>> getProductSkus(@PathVariable("id") Long id) {
+        return ResponseEntity.ok( productCommonService.getProductSkus(id));
     }
 }

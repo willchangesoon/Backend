@@ -15,10 +15,12 @@ public record CartItemResponse(
         Long skuId,
         Long productId,
         String productTitle,
+        String storeName,
         String optionSummary,
         int quantity,
         BigDecimal price,
         BigDecimal additionalPrice,
+        int discount,
         String imageUrl
 ) {
     public static CartItemResponse fromEntity(CartItem item) {
@@ -30,14 +32,15 @@ public record CartItemResponse(
                 .skuId(sku.getId())
                 .productId(product.getId())
                 .productTitle(product.getTitle())
+                .storeName(product.getStore().getName())
                 .optionSummary(sku.getOptions().stream()
                         .map(ProductOption::getValue)
                         .collect(Collectors.joining(" / ")))
                 .quantity(item.getQuantity())
                 .price(product.getPrice())
                 .additionalPrice(sku.getAdditionalPrice())
+                .discount(product.getDiscount())
                 .imageUrl(product.getMainImg())
                 .build();
     }
 }
-

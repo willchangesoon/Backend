@@ -36,5 +36,9 @@ public class CartItem extends BaseEntity {
     public void changeQuantity(int newQuantity) {
         this.quantity = newQuantity;
     }
+
+    public void changeSku(ProductSKU newSku) {
+        this.sku = newSku;
+    }
 }
 

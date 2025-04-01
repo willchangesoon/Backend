@@ -30,10 +30,7 @@ public class CartController {
     public ResponseEntity<List<CartItemResponse>> getCartItems(
             @RequestHeader("X-User-Id") Long userId
     ) {
-        List<CartItemResponse> result = cartService.getUserCartItems(userId).stream()
-                .map(CartItemResponse::fromEntity)
-                .toList();
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(cartService.getUserCartItems(userId));
     }
 
     @PatchMapping("/{cartItemId}")
@@ -41,7 +38,7 @@ public class CartController {
             @PathVariable Long cartItemId,
             @RequestBody UpdateCartItemQuantityRequest request
     ) {
-        cartService.updateQuantity(cartItemId, request.quantity());
+        cartService.updateCartItem(cartItemId, request.quantity(), request.skuId());
         return ResponseEntity.ok().build();
     }
 
