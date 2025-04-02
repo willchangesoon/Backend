@@ -28,9 +28,11 @@ public class ProductCommonService {
     private final ProductRepository productRepository;
     private final ProductOptionGroupRepository productOptionGroupRepository;
     private final ProductSKURepository productSKURepository;
+
     public List<ProductResponse> getAllProducts() {
         return productRepository.findAll().stream().map(ProductResponse::fromEntity).toList();
     }
+
 
     public CursorPageResponse<ProductResponse> getProductsByCursor(Long cursor, int pageSize) {
         Pageable pageable = PageRequest.of(0, pageSize);
