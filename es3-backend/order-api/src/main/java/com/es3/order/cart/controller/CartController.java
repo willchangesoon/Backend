@@ -33,6 +33,13 @@ public class CartController {
         return ResponseEntity.ok(cartService.getUserCartItems(userId));
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Integer> getCartItemsCount(
+            @RequestHeader("X-User-Id") Long userId
+    ) {
+        return ResponseEntity.ok(cartService.getUserCartItemsCount(userId));
+    }
+
     @PatchMapping("/{cartItemId}")
     public ResponseEntity<Void> updateQuantity(
             @PathVariable Long cartItemId,

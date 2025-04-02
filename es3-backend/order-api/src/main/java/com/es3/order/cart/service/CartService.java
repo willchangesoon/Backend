@@ -41,10 +41,20 @@ public class CartService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
+    public int getUserCartItemsCount(Long userId) {
+        return cartItemRepository.countAllByUserId(userId);
+    }
+
     @Transactional
     public void updateCartItem(Long cartItemId, Integer quantity, Long newSkuId) {
         CartItem item = cartItemRepository.findById(cartItemId)
                 .orElseThrow(() -> new CartException(ErrorCode.CART_ITEM_NOT_FOUND));
+
+        if (quantity != null && quantity == 0) {
+            cartItemRepository.delete(item);
+            return;
+        }
 
         if (quantity != null) {
             item.changeQuantity(quantity);
